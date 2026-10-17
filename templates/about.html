@@ -1,8 +1,345 @@
+<!-- templates/about.html -->
 {% extends "base.html" %}
+
+{% block title %}درباره ما | روان‌شناسی آنلاین{% endblock %}
 
 {% block content %}
 
-    
+<!-- Hero -->
+<section class="about-hero py-5" dir="rtl">
+    <div class="container py-lg-5">
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-6">
+                <span class="section-badge mb-3 d-inline-block">
+                    درباره مجموعه ما
+                </span>
+
+                <h1 class="display-5 fw-bold mb-4">
+                    برای درک بهتر خودمان،
+                    <span class="text-algae">کنار هم هستیم.</span>
+                </h1>
+
+                <p class="lead text-secondary mb-4">
+                    ما باور داریم که شناخت بهتر خود، آغاز مسیر رشد و
+                    آرامش است. تلاش می‌کنیم دسترسی به خدمات روان‌شناسی
+                    و مشاوره تخصصی را ساده‌تر کنیم تا هر فرد بتواند
+                    متناسب با نیازهایش مسیر مناسبی را پیدا کند.
+                </p>
+
+                <a href="/services/" class="btn btn-algae btn-lg">
+                    آشنایی با خدمات
+                    <i class="bi bi-arrow-left me-2"></i>
+                </a>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="hero-visual">
+                    <div class="hero-decoration"></div>
+
+                    <div class="hero-icon">
+                        <i class="bi bi-heart-pulse"></i>
+                    </div>
+
+                    <div class="hero-note hero-note-top">
+                        <i class="bi bi-heart me-2"></i>
+                        احترام و همدلی
+                    </div>
+
+                    <div class="hero-note hero-note-bottom">
+                        <i class="bi bi-shield-check me-2"></i>
+                        همراهی مسئولانه
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Mission -->
+<section class="py-5" dir="rtl">
+    <div class="container py-lg-4">
+        <div class="row align-items-center g-4">
+
+            <div class="col-lg-5">
+                <span class="section-badge mb-3 d-inline-block">
+                    مأموریت ما
+                </span>
+
+                <h2 class="section-title mb-4">
+                    هر فرد، داستان و نیازهای خودش را دارد.
+                </h2>
+            </div>
+
+            <div class="col-lg-7">
+                <p class="text-secondary lh-lg mb-3">
+                    تجربه‌های زندگی، روابط، دغدغه‌های فردی و مسیر
+                    تحصیلی هرکدام می‌توانند پرسش‌ها و چالش‌های متفاوتی
+                    ایجاد کنند. به همین دلیل، دسترسی به راهنمایی
+                    متناسب با شرایط هر فرد اهمیت دارد.
+                </p>
+
+                <p class="text-secondary lh-lg mb-0">
+                    هدف ما فراهم‌کردن بستری برای آشنایی با خدمات
+                    روان‌شناسی و مشاوره و ارتباط با متخصصان متناسب
+                    با نیازهای کاربران است؛ با تأکید بر احترام،
+                    مسئولیت‌پذیری و شفافیت.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Values -->
+<section class="values-section py-5" dir="rtl">
+    <div class="container py-lg-4">
+
+        <div class="text-center mb-5">
+            <span class="section-badge mb-3 d-inline-block">
+                اصول کاری ما
+            </span>
+
+            <h2 class="section-title">
+                ارزش‌هایی که به آن‌ها پایبندیم
+            </h2>
+
+            <p class="text-secondary mt-3">
+                کیفیت خدمات فقط به دانش تخصصی محدود نمی‌شود؛
+                نحوه برخورد و مسئولیت‌پذیری نیز اهمیت دارد.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-3">
+                <div class="value-card h-100">
+                    <div class="value-icon">
+                        <i class="bi bi-chat-heart"></i>
+                    </div>
+
+                    <h3 class="h5 fw-bold mb-3">احترام و همدلی</h3>
+
+                    <p class="text-secondary mb-0 lh-lg">
+                        هر فرد شایسته شنیده‌شدن و برخورد محترمانه،
+                        بدون تحقیر یا سرزنش است.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="value-card h-100">
+                    <div class="value-icon">
+                        <i class="bi bi-patch-check"></i>
+                    </div>
+
+                    <h3 class="h5 fw-bold mb-3">تخصص و مسئولیت</h3>
+
+                    <p class="text-secondary mb-0 lh-lg">
+                        معرفی شفاف تخصص‌ها و توجه به صلاحیت حرفه‌ای
+                        در ارائه خدمات روان‌شناسی.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="value-card h-100">
+                    <div class="value-icon">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+
+                    <h3 class="h5 fw-bold mb-3">حریم خصوصی</h3>
+
+                    <p class="text-secondary mb-0 lh-lg">
+                        حفاظت از اطلاعات کاربران و شفافیت درباره
+                        نحوه استفاده از داده‌های آن‌ها.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="value-card h-100">
+                    <div class="value-icon">
+                        <i class="bi bi-person-check"></i>
+                    </div>
+
+                    <h3 class="h5 fw-bold mb-3">توجه به نیاز فرد</h3>
+
+                    <p class="text-secondary mb-0 lh-lg">
+                        در نظر گرفتن تفاوت شرایط و نیازهای هر فرد
+                        برای انتخاب خدمات مناسب.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Services -->
+<section class="py-5" dir="rtl">
+    <div class="container py-lg-4">
+
+        <div class="text-center mb-5">
+            <span class="section-badge mb-3 d-inline-block">
+                خدمات ما
+            </span>
+
+            <h2 class="section-title">
+                در مسیرهای مختلف زندگی، همراه شما
+            </h2>
+
+            <p class="text-secondary mt-3">
+                با حوزه‌های مختلف خدمات روان‌شناسی و مشاوره آشنا شوید.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card h-100">
+                    <i class="bi bi-people service-icon"></i>
+
+                    <h3 class="h5 fw-bold mt-3">زوج‌درمانی</h3>
+
+                    <p class="text-secondary lh-lg">
+                        برای بررسی چالش‌های رابطه، ارتباط بهتر
+                        و درک متقابل.
+                    </p>
+
+                    <a href="/services/couples/" class="service-link">
+                        مشاهده خدمات
+                        <i class="bi bi-arrow-left me-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card h-100">
+                    <i class="bi bi-person service-icon"></i>
+
+                    <h3 class="h5 fw-bold mt-3">مشاوره فردی</h3>
+
+                    <p class="text-secondary lh-lg">
+                        برای شناخت بهتر خود و بررسی دغدغه‌ها
+                        و چالش‌های فردی.
+                    </p>
+
+                    <a href="/services/individual/" class="service-link">
+                        مشاهده خدمات
+                        <i class="bi bi-arrow-left me-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card h-100">
+                    <i class="bi bi-heart-pulse service-icon"></i>
+
+                    <h3 class="h5 fw-bold mt-3">خدمات سلامت روان</h3>
+
+                    <p class="text-secondary lh-lg">
+                        برای آشنایی با خدمات تخصصی مرتبط با
+                        چالش‌ها و اختلالات روانی.
+                    </p>
+
+                    <a href="/services/mental-disorders/" class="service-link">
+                        مشاهده خدمات
+                        <i class="bi bi-arrow-left me-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card h-100">
+                    <i class="bi bi-mortarboard service-icon"></i>
+
+                    <h3 class="h5 fw-bold mt-3">مشاوره تحصیلی</h3>
+
+                    <p class="text-secondary lh-lg">
+                        برای بررسی دغدغه‌های تحصیلی و تصمیم‌گیری
+                        درباره مسیر آموزشی.
+                    </p>
+
+                    <a href="/services/educational/" class="service-link">
+                        مشاهده خدمات
+                        <i class="bi bi-arrow-left me-1"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Team -->
+<section class="team-section py-5" dir="rtl">
+    <div class="container py-lg-4">
+        <div class="row justify-content-center text-center">
+
+            <div class="col-lg-8">
+                <div class="team-icon mb-4">
+                    <i class="bi bi-people"></i>
+                </div>
+
+                <span class="section-badge mb-3 d-inline-block">
+                    تیم متخصصان
+                </span>
+
+                <h2 class="section-title mb-4">
+                    آشنایی با متخصصان ما
+                </h2>
+
+                <p class="text-secondary lh-lg mb-4">
+                    آشنایی با تخصص، سوابق و حوزه فعالیت مشاوران
+                    به شما کمک می‌کند با شناخت بیشتری خدمات موردنیاز
+                    خود را انتخاب کنید.
+                </p>
+
+                <a href="/specialists/" class="btn btn-algae btn-lg">
+                    مشاهده متخصصان
+                    <i class="bi bi-arrow-left me-2"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- CTA -->
+<section class="py-5" dir="rtl">
+    <div class="container py-3">
+        <div class="cta-box text-center">
+
+            <i class="bi bi-chat-square-heart cta-icon"></i>
+
+            <h2 class="h3 fw-bold mt-3 mb-3">
+                برای قدم بعدی آماده‌اید؟
+            </h2>
+
+            <p class="mb-4">
+                با خدمات ما آشنا شوید یا برای دریافت راهنمایی
+                درباره مسیر مناسب خود با ما ارتباط بگیرید.
+            </p>
+
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a href="/services/" class="btn btn-light btn-lg">
+                    مشاهده خدمات
+                </a>
+
+                <a href="/support/" class="btn btn-outline-light btn-lg">
+                    ارتباط با ما
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
 
 {% endblock %}
-

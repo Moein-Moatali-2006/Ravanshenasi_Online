@@ -9,5 +9,5 @@ def home():
 
 
 @app.route("/about", methods=["GET"])
-def home():
+def about():
     return render_template("about.html")
