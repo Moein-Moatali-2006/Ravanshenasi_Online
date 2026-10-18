@@ -1,0 +1,455 @@
+/* ===== About Page ===== */
+.about-page {
+    --about-algae: #304F35;
+    --about-algae-light: #507D57;
+    --about-soft-green: #FFF7F8;
+    --about-cream: #E8DFCF;
+    --about-text: #26372A;
+    color: var(--about-text);
+    line-height: 1.9;
+}
+
+.about-page h1,
+.about-page h2,
+.about-page h3 {
+    line-height: 1.6;
+    font-weight: 700;
+}
+
+.about-page p {
+    color: #58645A;
+}
+
+/* ===== General Sections ===== */
+.about-section {
+    padding: 75px 0;
+}
+
+.about-section h2 {
+    margin-bottom: 18px;
+    color: var(--about-algae);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.about-section-heading {
+    max-width: 720px;
+    margin: 0 auto 38px;
+    text-align: center;
+}
+
+.about-section-heading p {
+    margin-bottom: 0;
+}
+
+/* ===== Highlight ===== */
+.about-highlight {
+    height: 100%;
+    padding: 35px;
+    background: #FFF7F8;
+    border: 1px solid rgba(48, 79, 53, 0.08);
+    border-radius: 20px;
+}
+
+.about-highlight > i {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: var(--about-algae-light);
+    font-size: 2.5rem;
+}
+
+.about-highlight h3 {
+    color: var(--about-algae);
+    font-size: 1.3rem;
+}
+
+/* ===== Values ===== */
+.about-values {
+    background: #FFFCFC;
+}
+
+.about-value-card {
+    height: 100%;
+    padding: 25px 20px;
+    background: #fff;
+    border: 1px solid #E7EBE4;
+    border-radius: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about-value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(38, 55, 42, 0.07);
+}
+
+.about-value-card > i {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: var(--about-algae-light);
+    font-size: 1.9rem;
+}
+
+.about-value-card h3 {
+    color: var(--about-algae);
+    font-size: 1.12rem;
+}
+
+.about-value-card p {
+    margin-bottom: 0;
+}
+
+/* ===== Service Cards ===== */
+.about-service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;
+    padding: 28px;
+    background: #fff;
+    border: 1px solid #E4E9E1;
+    border-radius: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about-service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(38, 55, 42, 0.08);
+}
+
+.about-service-card > i {
+    margin-bottom: 14px;
+    color: var(--about-algae-light);
+    font-size: 2rem;
+}
+
+.about-service-card h3 {
+    color: var(--about-algae);
+    font-size: 1.25rem;
+}
+
+.about-service-card p {
+    flex-grow: 1;
+}
+
+.about-service-card a {
+    margin-top: 12px;
+    color: var(--about-algae);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.about-service-card a:hover {
+    color: var(--about-algae-light);
+    text-decoration: underline;
+}
+
+/* ===== Team ===== */
+.about-team {
+    background: #FFF7F8;
+}
+
+.about-team-content {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about-team-content p {
+    margin-bottom: 24px;
+}
+
+/* ===== CTA ===== */
+.about-cta {
+    padding: 45px 25px;
+    text-align: center;
+    background: var(--about-algae);
+    border-radius: 22px;
+}
+
+.about-cta h2 {
+    color: #fff;
+}
+
+.about-cta p {
+    max-width: 650px;
+    margin: 0 auto 24px;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+
+/* ===== Team and CTA Buttons ===== */
+
+.about-btn-primary,
+.about-btn-light {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.25s ease, color 0.25s ease,
+                border-color 0.25s ease, transform 0.25s ease,
+                box-shadow 0.25s ease;
+}
+
+.about-btn-primary {
+    color: #fff;
+    background: #304F35;
+    border: 1px solid #304F35;
+}
+
+.about-btn-primary:hover {
+    color: #fff;
+    background: #507D57;
+    border-color: #507D57;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(48, 79, 53, 0.16);
+}
+
+.about-btn-light {
+    color: #304F35;
+    background: #fff;
+    border: 1px solid #fff;
+}
+
+.about-btn-light:hover {
+    color: #304F35;
+    background: #FBEAEC;
+    border-color: #FBEAEC;
+    transform: translateY(-2px);
+}
+
+.about-btn-primary:focus-visible,
+.about-btn-light:focus-visible {
+    outline: 3px solid #8BAE8D;
+    outline-offset: 4px;
+}
+
+@media (max-width: 575.98px) {
+    .about-team-content .about-btn-primary,
+    .about-cta .about-btn-light {
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+/* ===== Keyboard Accessibility ===== */
+
+.about-page a:focus-visible {
+    outline: 3px solid #8BAE8D;
+    outline-offset: 4px;
+}
+
+/* ===== Hero: From Pause to the Flow of Life ===== */
+
+.about-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 90px 0;
+    background: #fff7f8;
+}
+
+/* Text */
+
+.hero-content {
+    max-width: 540px;
+    margin-right: auto;
+}
+
+.hero-eyebrow {
+    display: inline-block;
+    margin-bottom: 22px;
+    color: #507D57;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.hero-title {
+    margin-bottom: 20px;
+    color: #304F35;
+    font-size: clamp(2.4rem, 4vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.65;
+}
+
+.hero-title span {
+    display: inline-block;
+    color: #507D57;
+}
+
+.hero-description {
+    max-width: 480px;
+    margin-bottom: 30px;
+    color: #5E665F;
+    font-size: 1.08rem;
+    line-height: 2.2;
+}
+
+/* Buttons */
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-btn-primary,
+.hero-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 22px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.25s ease, color 0.25s ease,
+                border-color 0.25s ease, transform 0.25s ease;
+}
+
+.hero-btn-primary {
+    color: #fff;
+    background: #304F35;
+    border: 1px solid #304F35;
+}
+
+.hero-btn-primary:hover {
+    color: #fff;
+    background: #507D57;
+    border-color: #507D57;
+    transform: translateY(-2px);
+}
+
+.hero-btn-secondary {
+    color: #304F35;
+    background: transparent;
+    border: 1px solid #D7C8CB;
+}
+
+.hero-btn-secondary:hover {
+    color: #304F35;
+    background: #FBEAEC;
+    border-color: #CFAFB5;
+}
+
+.hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 32px;
+    color: #667267;
+    font-size: 0.9rem;
+}
+
+.hero-trust i {
+    color: #507D57;
+    font-size: 1.2rem;
+}
+
+/* Heartbeat illustration: keep the original SVG artwork and colors */
+
+.hero-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 390px;
+    padding: 35px 25px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    background: #285442;
+    border-radius: 28px;
+}
+
+.heartbeat-art {
+    display: block;
+    width: 100%;
+    max-width: 370px;
+    height: auto;
+    margin-bottom: 12px;
+}
+
+.hero-art-title {
+    margin: 5px 0 10px;
+    color: #F1EBDD;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.hero-art-caption {
+    margin: 0;
+    color: #C8D8CC;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+
+@media (max-width: 991.98px) {
+    .about-hero {
+        padding: 60px 0;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-visual {
+        min-height: 340px;
+    }
+
+    .heartbeat-art {
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .about-hero {
+        padding: 45px 0;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+        line-height: 1.7;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .hero-actions .btn,
+    .hero-actions a {
+        width: 100%;
+    }
+
+    .hero-visual {
+        min-height: 300px;
+        padding: 25px 15px;
+        border-radius: 22px;
+    }
+
+    .heartbeat-art {
+        max-width: 280px;
+    }
+
+    .hero-art-title {
+        font-size: 1.15rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .about-page *,
+    .about-page *::before,
+    .about-page *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
