@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}پشتیبانی | روان‌شناسی آنلاین{% endblock %}
+
+{% block meta_description %}
+    ارتباط با پشتیبانی مجموعه، پیگیری درخواست‌ها و دریافت راهنمایی درباره خدمات و مشکلات فنی سایت.
+{% endblock %}
+
+{% block content %}
+<main class="support-page" dir="rtl">
+
+    <!-- Hero -->
+    <section class="support-hero">
+        <div class="container">
+            <div class="support-hero-inner">
+
+                <div class="support-hero-content">
+                    <span class="support-eyebrow">
+                        <i class="bi bi-chat-heart"></i>
+                        همراه شما هستیم
+                    </span>
+
+                    <h1>چطور می‌تونیم کمکتون کنیم؟</h1>
+
+                    <p>
+                        اگر درباره خدمات، ثبت درخواست مشاوره یا استفاده از سایت
+                        سؤالی دارید، پیام‌تون رو برای ما بفرستید.
+                        تلاش می‌کنیم مسیر ارتباط با مجموعه براتون ساده و روشن باشه.
+                    </p>
+
+                    <a href="#support-form" class="support-main-btn">
+                        ارسال پیام
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+
+                    <div class="support-hero-note">
+                        <i class="bi bi-shield-check"></i>
+                        <span>اطلاعات تماس شما فقط برای پیگیری درخواست استفاده می‌شود.</span>
+                    </div>
+                </div>
+
+                <div class="support-hero-visual" aria-hidden="true">
+                    <div class="support-visual-circle circle-one"></div>
+                    <div class="support-visual-circle circle-two"></div>
+
+                    <div class="support-visual-card">
+                        <div class="support-visual-icon">
+                            <i class="bi bi-chat-square-heart"></i>
+                        </div>
+                        <span class="support-visual-label">پشتیبانی و راهنمایی</span>
+                        <strong>یک پیام تا شروع ارتباط</strong>
+                        <div class="support-visual-line">
+                            <span></span>
+                        </div>
+                        <p>سؤالتون رو با ما در میون بذارید.</p>
+                    </div>
+
+                    <span class="support-floating-icon floating-chat">
+                        <i class="bi bi-chat-dots"></i>
+                    </span>
+                    <span class="support-floating-icon floating-heart">
+                        <i class="bi bi-heart"></i>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact options -->
+    <section class="support-contact-section">
+        <div class="container">
+
+            <div class="support-section-heading">
+                <span class="support-section-label">راه‌های ارتباطی</span>
+                <h2>از راهی که راحت‌ترید با ما در ارتباط باشید</h2>
+                <p>برای پرسش‌ها و پیگیری‌های معمول می‌تونید از روش‌های زیر استفاده کنید.</p>
+            </div>
+
+            <div class="support-contact-grid">
+
+                <a href="mailto:Example@gmail.com" class="support-contact-card">
+                    <span class="support-contact-icon">
+                        <i class="bi bi-envelope"></i>
+                    </span>
+                    <span class="support-contact-title">ایمیل</span>
+                    <span class="support-contact-value">Ravanshenasionline2020@gmail.com</span>
+                    <span class="support-contact-action">
+                        ارسال ایمیل <i class="bi bi-arrow-up-left"></i>
+                    </span>
+                </a>
+
+                <a href="tel:+98123456789" class="support-contact-card">
+                    <span class="support-contact-icon">
+                        <i class="bi bi-telephone"></i>
+                    </span>
+                    <span class="support-contact-title">تماس تلفنی</span>
+                    <span class="support-contact-value" dir="ltr">+98 9337408461</span>
+                    <span class="support-contact-action">
+                        تماس با ما <i class="bi bi-arrow-up-left"></i>
+                    </span>
+                </a>
+
+                <div class="support-contact-card">
+                    <span class="support-contact-icon">
+                        <i class="bi bi-geo-alt"></i>
+                    </span>
+                    <span class="support-contact-title">آدرس مجموعه</span>
+                    <span class="support-contact-value">
+                        اصفهان، خیابان اول، کوچه دوم، پلاک ۵، طبقه ۲
+                    </span>
+                    <span class="support-contact-action">
+                        مراجعه حضوری
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact form -->
+    <section class="support-form-section" id="support-form">
+        <div class="container">
+            <div class="support-form-layout">
+
+                <div class="support-form-intro">
+                    
+                    <h2>درخواست‌تون رو برای ما بنویسید</h2>
+                    <p>
+                        موضوع رو مشخص کنید و توضیح کوتاهی بنویسید تا رسیدگی به
+                        درخواست‌تون راحت‌تر باشه.
+                    </p>
+
+                    
+                </div>
+
+                <div class="support-form-card">
+
+                    {# پیام‌ها باید از سمت Flask به این قالب ارسال شوند. #}
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="support-alert support-alert-{{ category }}"
+                                     role="status">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form method="post" action="{{ url_for('support') }}">
+                        {# اگر Flask-WTF داری، توکن CSRF را اینجا قرار بده. #}
+                        {# مثال: {{ form.csrf_token }} #}
+
+                        <div class="support-form-row">
+                            <div class="support-field">
+                                <label for="support-name">نام و نام خانوادگی</label>
+                                <input
+                                    type="text"
+                                    id="support-name"
+                                    name="name"
+                                    placeholder="نام شما"
+                                    autocomplete="name"
+                                >
+                            </div>
+
+                            <div class="support-field">
+                                <label for="support-contact">
+                                    ایمیل یا شماره تماس <span>*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="support-contact"
+                                    name="contact"
+                                    placeholder="راه ارتباطی شما"
+                                    autocomplete="email"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <div class="support-field">
+                            <label for="support-subject">موضوع پیام <span>*</span></label>
+                            <select id="support-subject" name="subject" required>
+                                <option value="" selected disabled>موضوع رو انتخاب کنید</option>
+                                <option value="service">پرسش درباره خدمات</option>
+                                <option value="appointment">ثبت یا پیگیری درخواست مشاوره</option>
+                                <option value="technical">مشکل فنی سایت</option>
+                                <option value="feedback">پیشنهاد یا انتقاد</option>
+                                <option value="other">سایر موارد</option>
+                            </select>
+                        </div>
+
+                        <div class="support-field">
+                            <label for="support-message">متن پیام <span>*</span></label>
+                            <textarea
+                                id="support-message"
+                                name="message"
+                                rows="5"
+                                placeholder="چطور می‌تونیم کمکتون کنیم؟"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="support-submit-btn">
+                            ارسال درخواست
+                            <i class="bi bi-arrow-left"></i>
+                        </button>
+
+                        <p class="support-form-footnote">
+                            <i class="bi bi-lock"></i>
+                            با ارسال فرم، اطلاعات شما مطابق سیاست حفظ حریم خصوصی
+                            مجموعه پردازش خواهد شد.
+                        </p>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="support-faq-section">
+        <div class="container">
+            <div class="support-section-heading">
+                <span class="support-section-label">سؤالات متداول</span>
+                <h2>شاید پاسخ سؤالتون اینجا باشه</h2>
+                <p>پاسخ چند پرسش رایج درباره پشتیبانی و خدمات سایت.</p>
+            </div>
+
+            <div class="support-faq-list">
+
+                <details class="support-faq-item">
+                    <summary>
+                        چطور برای دریافت مشاوره اقدام کنم؟
+                        <span class="support-faq-toggle">
+                            <i class="bi bi-plus"></i>
+                        </span>
+                    </summary>
+                    <div class="support-faq-answer">
+                        به صفحه خدمات مراجعه کنید و خدمت موردنظرتون رو انتخاب کنید.
+                        مراحل ثبت درخواست باید در همان صفحه توضیح داده شده باشه.
+                    </div>
+                </details>
+
+                <details class="support-faq-item">
+                    <summary>
+                        چطور درخواست قبلی رو پیگیری کنم؟
+                        <span class="support-faq-toggle">
+                            <i class="bi bi-plus"></i>
+                        </span>
+                    </summary>
+                    <div class="support-faq-answer">
+                        از طریق فرم پشتیبانی، موضوع «ثبت یا پیگیری درخواست مشاوره»
+                        رو انتخاب کنید و اطلاعات لازم برای پیگیری رو بنویسید.
+                        اطلاعات حساس غیرضروری ارسال نکنید.
+                    </div>
+                </details>
+
+                <details class="support-faq-item">
+                    <summary>
+                        اگر سایت درست کار نکرد، چه کار کنم؟
+                        <span class="support-faq-toggle">
+                            <i class="bi bi-plus"></i>
+                        </span>
+                    </summary>
+                    <div class="support-faq-answer">
+                        مشکل رو همراه با توضیح کوتاهی از کاری که انجام می‌دادید
+                        گزارش کنید. در صورت نیاز می‌تونید نوع دستگاه و مرورگر رو
+                        هم بنویسید؛ از ارسال رمز عبور یا اطلاعات حساس خودداری کنید.
+                    </div>
+                </details>
+
+                <details class="support-faq-item">
+                    <summary>
+                        آیا فرم پشتیبانی برای مشاوره روان‌شناسی است؟
+                        <span class="support-faq-toggle">
+                            <i class="bi bi-plus"></i>
+                        </span>
+                    </summary>
+                    <div class="support-faq-answer">
+                        این فرم برای پرسش‌ها و پیگیری‌های مربوط به سایت و خدمات است
+                        و جایگزین جلسه مشاوره یا خدمات اورژانسی نیست.
+                    </div>
+                </details>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+{% endblock %}

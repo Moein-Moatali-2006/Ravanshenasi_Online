@@ -11,3 +11,8 @@ def home():
 @app.route("/about", methods=["GET"])
 def about():
     return render_template("about.html")
+
+
+@app.route("/support/", methods=["GET"])
+def support():
+    return render_template("support.html")
