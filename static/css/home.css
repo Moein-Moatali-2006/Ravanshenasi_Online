@@ -1,0 +1,883 @@
+
+/* =========================
+   Home page
+========================= */
+
+.home-page {
+    --home-green: #285442;
+    --home-green-dark: #1d4032;
+    --home-green-soft: #edf4ef;
+    --home-pink: #fff6f7;
+    --home-peach: #e9a795;
+    --home-text: #29372f;
+    --home-muted: #748078;
+    --home-border: #e7ebe7;
+
+    color: var(--home-text);
+    overflow: hidden;
+}
+
+.home-page h1,
+.home-page h2,
+.home-page h3,
+.home-page p {
+    overflow-wrap: anywhere;
+}
+
+.home-page h1,
+.home-page h2,
+.home-page h3 {
+    line-height: 1.8;
+}
+
+.home-page p {
+    line-height: 2.1;
+}
+
+.home-page a {
+    transition:
+        color 180ms ease,
+        background 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.home-page a:focus-visible,
+.home-page summary:focus-visible {
+    outline: 3px solid var(--home-peach);
+    outline-offset: 4px;
+}
+
+.home-page .section-space {
+    padding-top: 90px;
+    padding-bottom: 90px;
+}
+
+.home-page .home-eyebrow {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: var(--home-green);
+    font-size: 13px;
+    font-weight: 750;
+    letter-spacing: 0.2px;
+}
+
+.home-page .home-section-heading {
+    margin-bottom: 38px;
+}
+
+.home-page .home-section-heading h2 {
+    margin: 0 0 12px;
+    color: var(--home-green-dark);
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 750;
+    letter-spacing: -0.5px;
+}
+
+.home-page .home-section-heading p {
+    max-width: 650px;
+    margin: 0;
+    color: var(--home-muted);
+    font-size: 14px;
+}
+
+.home-page .home-section-heading.text-center p {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* Buttons */
+
+.home-page .home-btn {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 21px;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+}
+
+.home-page .home-btn-primary {
+    background: var(--home-green);
+    color: #fff;
+}
+
+.home-page .home-btn-primary:hover {
+    background: var(--home-green-dark);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(40, 84, 66, 0.16);
+    transform: translateY(-2px);
+}
+
+.home-page .home-btn-outline {
+    border-color: #dce6df;
+    background: #fff;
+    color: var(--home-green);
+}
+
+.home-page .home-btn-outline:hover {
+    border-color: var(--home-green);
+    background: var(--home-green-soft);
+}
+
+.home-page .home-btn-light {
+    background: #fff;
+    color: var(--home-green-dark);
+}
+
+.home-page .home-btn-light:hover {
+    background: var(--home-pink);
+    transform: translateY(-2px);
+}
+
+.home-page .home-btn-cta-outline {
+    border-color: rgba(255, 255, 255, 0.45);
+    color: #fff;
+}
+
+.home-page .home-btn-cta-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+}
+
+/* Intro */
+
+.home-intro {
+    background:
+        radial-gradient(
+            circle at 0 15%,
+            rgba(233, 167, 149, 0.13),
+            transparent 27%
+        ),
+        #fff;
+}
+
+.home-intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    align-items: center;
+    gap: 65px;
+}
+
+.home-intro-content h1 {
+    margin: 0 0 22px;
+    color: var(--home-green-dark);
+    font-size: clamp(30px, 4vw, 46px);
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.home-intro-content h1 span {
+    display: block;
+    color: var(--home-green);
+}
+
+.home-intro-content > p {
+    max-width: 590px;
+    margin-bottom: 25px;
+    color: var(--home-muted);
+    font-size: 14px;
+}
+
+.home-intro-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.home-intro-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-top: 25px;
+    color: var(--home-muted);
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+.home-intro-note i {
+    margin-top: 3px;
+    color: var(--home-green);
+    font-size: 16px;
+}
+
+.home-intro-visual {
+    min-width: 0;
+}
+
+.home-visual-card {
+    position: relative;
+    min-height: 370px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 42px;
+    border-radius: 25px;
+    overflow: hidden;
+    background: var(--home-green);
+    color: #fff;
+    isolation: isolate;
+}
+
+.home-visual-card::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 280px;
+    height: 280px;
+    top: -130px;
+    left: -75px;
+    border: 1px solid rgba(255, 255, 255, 0.17);
+    border-radius: 50%;
+}
+
+.home-visual-card::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 200px;
+    height: 200px;
+    right: -95px;
+    bottom: -85px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 50%;
+}
+
+.home-visual-icon {
+    width: 65px;
+    height: 65px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 31px;
+}
+
+.home-visual-label {
+    margin-bottom: 10px;
+    color: #d7e7dc;
+    font-size: 12px;
+}
+
+.home-visual-card h2 {
+    max-width: 340px;
+    margin: 0 0 13px;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 750;
+}
+
+.home-visual-card p {
+    max-width: 340px;
+    margin: 0;
+    color: #dbe6de;
+    font-size: 13px;
+}
+
+.home-visual-decoration {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--home-peach);
+    box-shadow: 0 0 0 8px rgba(233, 167, 149, 0.12);
+}
+
+.decoration-one {
+    top: 65px;
+    right: 55px;
+}
+
+.decoration-two {
+    right: 45%;
+    bottom: 45px;
+    width: 7px;
+    height: 7px;
+}
+
+/* Services */
+
+.home-services {
+    background: var(--home-pink);
+}
+
+.home-service-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 29px 26px;
+    border: 1px solid rgba(40, 84, 66, 0.07);
+    border-radius: 18px;
+    background: #fff;
+    transition:
+        transform 220ms ease,
+        box-shadow 220ms ease,
+        border-color 220ms ease;
+}
+
+.home-service-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(40, 84, 66, 0.2);
+    box-shadow: 0 17px 38px rgba(40, 84, 66, 0.07);
+}
+
+.home-service-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 21px;
+    border-radius: 15px;
+    background: #eaf3ed;
+    color: var(--home-green);
+    font-size: 24px;
+}
+
+.home-service-icon.icon-pink {
+    background: #fff0f3;
+    color: #a85d72;
+}
+
+.home-service-icon.icon-peach {
+    background: #fff1eb;
+    color: #a35e46;
+}
+
+.home-service-icon.icon-blue {
+    background: #eef3fa;
+    color: #47688f;
+}
+
+.home-service-icon.icon-yellow {
+    background: #fff7e6;
+    color: #98752c;
+}
+
+.home-service-icon.icon-dark {
+    background: #edf0ee;
+    color: #46574c;
+}
+
+.home-service-card h3 {
+    margin: 0 0 12px;
+    color: var(--home-green-dark);
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.home-service-card p {
+    flex: 1;
+    margin: 0 0 22px;
+    color: var(--home-muted);
+    font-size: 13px;
+}
+
+.home-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--home-green);
+    font-size: 12px;
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.home-card-link:hover {
+    gap: 13px;
+    color: var(--home-green-dark);
+}
+
+/* Process */
+
+.home-process {
+    background: #fff;
+}
+
+.home-process-card {
+    position: relative;
+    height: 100%;
+    padding: 30px 27px;
+    border: 1px solid var(--home-border);
+    border-radius: 18px;
+    background: #fff;
+}
+
+.home-process-number {
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    color: #dbe6de;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.home-process-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    background: var(--home-green-soft);
+    color: var(--home-green);
+    font-size: 23px;
+}
+
+.home-process-card h3 {
+    margin: 0 0 11px;
+    color: var(--home-green-dark);
+    font-size: 16px;
+    font-weight: 750;
+}
+
+.home-process-card p {
+    margin: 0;
+    color: var(--home-muted);
+    font-size: 13px;
+}
+
+/* Values */
+
+.home-values {
+    background: #f7f9f7;
+}
+
+.home-values-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: 70px;
+}
+
+.home-values-content h2 {
+    margin: 0 0 18px;
+    color: var(--home-green-dark);
+    font-size: clamp(26px, 3vw, 36px);
+    font-weight: 800;
+}
+
+.home-values-content > p {
+    margin-bottom: 25px;
+    color: var(--home-muted);
+    font-size: 14px;
+}
+
+.home-values-list {
+    display: grid;
+    gap: 15px;
+}
+
+.home-value-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 17px;
+    padding: 23px;
+    border: 1px solid var(--home-border);
+    border-radius: 16px;
+    background: #fff;
+}
+
+.home-value-icon {
+    flex: 0 0 45px;
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: var(--home-green-soft);
+    color: var(--home-green);
+    font-size: 21px;
+}
+
+.home-value-item h3 {
+    margin: 0 0 6px;
+    color: var(--home-green-dark);
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.home-value-item p {
+    margin: 0;
+    color: var(--home-muted);
+    font-size: 12px;
+}
+
+/* FAQ */
+
+.home-faq {
+    background: #fff;
+}
+
+.home-faq-list {
+    max-width: 850px;
+    display: grid;
+    gap: 12px;
+    margin: 0 auto;
+}
+
+.home-faq-item {
+    border: 1px solid var(--home-border);
+    border-radius: 13px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.home-faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 19px 21px;
+    color: var(--home-green-dark);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+}
+
+.home-faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.home-faq-item summary i {
+    flex: 0 0 auto;
+    color: var(--home-green);
+    transition: transform 180ms ease;
+}
+
+.home-faq-item[open] summary i {
+    transform: rotate(45deg);
+}
+
+.home-faq-item > p {
+    padding: 0 21px 20px;
+    margin: 0;
+    color: var(--home-muted);
+    font-size: 13px;
+}
+
+/* CTA */
+
+.home-cta-section {
+    padding: 25px 0 90px;
+    background: #fff;
+}
+
+.home-cta {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 35px;
+    padding: 44px;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--home-green);
+    color: #fff;
+}
+
+.home-cta::after {
+    content: "";
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    left: -95px;
+    bottom: -135px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.home-cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 570px;
+}
+
+.home-cta-content > span {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #d8e6dc;
+    font-size: 12px;
+}
+
+.home-cta-content h2 {
+    margin: 0 0 10px;
+    color: #fff;
+    font-size: clamp(23px, 3vw, 31px);
+    font-weight: 800;
+}
+
+.home-cta-content p {
+    margin: 0;
+    color: #dce7df;
+    font-size: 13px;
+}
+
+.home-cta-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Responsive */
+
+@media (max-width: 991.98px) {
+    .home-page .section-space {
+        padding-top: 65px;
+        padding-bottom: 65px;
+    }
+
+    .home-intro-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .home-intro-content {
+        max-width: 720px;
+    }
+
+    .home-intro-visual {
+        max-width: 650px;
+        width: 100%;
+    }
+
+    .home-visual-card {
+        min-height: 300px;
+    }
+
+    .home-values-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .home-cta {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .home-page .section-space {
+        padding-top: 48px;
+        padding-bottom: 48px;
+    }
+
+    .home-intro-content h1 {
+        font-size: 30px;
+        letter-spacing: -0.5px;
+    }
+
+    .home-intro-content > p {
+        font-size: 13px;
+    }
+
+    .home-intro-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .home-intro-actions .home-btn {
+        width: 100%;
+    }
+
+    .home-visual-card {
+        min-height: 290px;
+        padding: 28px;
+        border-radius: 19px;
+    }
+
+    .home-visual-card h2 {
+        font-size: 22px;
+    }
+
+    .home-page .home-section-heading {
+        margin-bottom: 26px;
+    }
+
+    .home-page .home-section-heading h2 {
+        font-size: 25px;
+    }
+
+    .home-service-card {
+        padding: 24px 22px;
+    }
+
+    .home-process-card {
+        padding: 25px 22px;
+    }
+
+    .home-value-item {
+        padding: 18px;
+    }
+
+    .home-faq-item summary {
+        padding: 16px;
+        font-size: 13px;
+    }
+
+    .home-faq-item > p {
+        padding: 0 16px 17px;
+        font-size: 12px;
+    }
+
+    .home-cta {
+        padding: 29px 23px;
+        border-radius: 18px;
+    }
+
+    .home-cta-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .home-cta-actions .home-btn {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-page *,
+    .home-page *::before,
+    .home-page *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+
+
+
+
+
+
+/* ==========================
+   Home Services - Unified
+========================== */
+
+.home-services .home-service-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px 26px;
+    background-color: #ffffff;
+    border: 1px solid #e4eee8;
+    border-radius: 20px;
+    box-shadow: 0 6px 22px rgba(28, 74, 52, 0.05);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.home-services .home-service-card:hover {
+    transform: translateY(-6px);
+    border-color: #a8cbb7;
+    box-shadow: 0 14px 32px rgba(28, 74, 52, 0.11);
+}
+
+/* آیکون‌های یک‌رنگ */
+.home-services .home-service-icon {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    border-radius: 16px;
+    background-color: #e8f3ec;
+    color: #246b49;
+    font-size: 27px;
+}
+
+/* عنوان کارت */
+.home-services .home-service-card h3 {
+    margin-bottom: 12px;
+    color: #203c2e;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.8;
+}
+
+/* توضیحات */
+.home-services .home-service-card p {
+    margin-bottom: 24px;
+    color: #68766e;
+    font-size: 0.94rem;
+    line-height: 2;
+}
+
+/* دکمه‌ها در یک ردیف پایین کارت */
+.home-services .home-card-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto;
+    padding: 11px 17px;
+    border: 1px solid #246b49;
+    border-radius: 10px;
+    background-color: #246b49;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.8;
+    text-decoration: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.home-services .home-card-link:hover {
+    background-color: #194d34;
+    border-color: #194d34;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 13px rgba(36, 107, 73, 0.2);
+}
+
+.home-services .home-card-link i {
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.home-services .home-card-link:hover i {
+    transform: translateX(-3px);
+}
+
+.home-services .home-card-link:focus-visible {
+    outline: 3px solid #a8cbb7;
+    outline-offset: 4px;
+}
+
+
+@media (max-width: 576px) {
+    .home-services .home-service-card {
+        padding: 24px 21px;
+        border-radius: 16px;
+    }
+
+    .home-services .home-card-link {
+        width: 100%;
+    }
+}

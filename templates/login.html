@@ -1,0 +1,234 @@
+
+{% extends "base.html" %}
+
+{% block title %}ورود به حساب کاربری | روان‌شناسی آنلاین{% endblock %}
+
+{% block meta_description %}
+ورود امن به حساب کاربری روان‌شناسی آنلاین از طریق شماره تلفن و رمز عبور یا کد تأیید پیامکی.
+{% endblock %}
+
+{% block content %}
+<main class="login-page" dir="rtl">
+    <div class="login-container">
+
+        <section class="login-card">
+            <a href="{{ url_for('home') }}" class="login-brand">
+                <span class="login-brand-icon">
+                    <i class="bi bi-heart-pulse"></i>
+                </span>
+                <span>روان‌شناسی آنلاین</span>
+            </a>
+
+            <div class="login-heading">
+                <h1>خوش آمدید</h1>
+                <p>برای ورود به حساب کاربری خود اطلاعاتت را وارد کن.</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="login-messages" aria-live="polite">
+                        {% for category, message in messages %}
+                            <div class="login-message login-message-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <input
+                type="radio"
+                name="login-tab"
+                id="login-password-tab"
+                class="login-tab-radio"
+                checked
+            >
+
+            <input
+                type="radio"
+                name="login-tab"
+                id="login-sms-tab"
+                class="login-tab-radio"
+            >
+
+            <div class="login-tabs" role="tablist" aria-label="روش ورود">
+                <label for="login-password-tab" class="login-tab">
+                    <i class="bi bi-lock"></i>
+                    رمز عبور
+                </label>
+
+                <label for="login-sms-tab" class="login-tab">
+                    <i class="bi bi-chat-dots"></i>
+                    ورود با پیامک
+                </label>
+            </div>
+
+            <!-- ورود با رمز عبور -->
+            <form
+                action="{{ url_for('login') }}"
+                method="POST"
+                class="login-form login-password-form"
+            >
+                <input type="hidden" name="login_method" value="password">
+
+                {# اگر Flask-WTF داری، توکن CSRF را اینجا قرار بده. #}
+
+                <div class="login-field">
+                    <label for="password-phone">شماره تلفن همراه</label>
+                    <div class="login-input-wrap">
+                        <i class="bi bi-phone"></i>
+                        <input
+                            type="tel"
+                            id="password-phone"
+                            name="phone"
+                            placeholder="09123456789"
+                            autocomplete="tel"
+                            inputmode="tel"
+                            pattern="09[0-9]{9}"
+                            maxlength="11"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="login-field">
+                    <label for="login-password">رمز عبور</label>
+                    <div class="login-input-wrap">
+                        <i class="bi bi-key"></i>
+                        <input
+                            type="password"
+                            id="login-password"
+                            name="password"
+                            placeholder="رمز عبور خود را وارد کنید"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <button type="submit" class="login-submit">
+                    ورود به حساب
+                    <i class="bi bi-arrow-left"></i>
+                </button>
+            </form>
+
+            <!-- ورود با پیامک -->
+            <form
+                action="{{ url_for('login') }}"
+                method="POST"
+                class="login-form login-sms-form"
+            >
+                <input type="hidden" name="login_method" value="sms">
+
+                {# اگر Flask-WTF داری، توکن CSRF را اینجا قرار بده. #}
+
+                <div class="login-sms-note">
+                    <i class="bi bi-shield-check"></i>
+                    <p>
+                        کد یک‌بارمصرف برای شماره تلفن شما ارسال می‌شود.
+                        آن را فقط در همین صفحه وارد کنید.
+                    </p>
+                </div>
+
+                <div class="login-field">
+                    <label for="sms-phone">شماره تلفن همراه</label>
+                    <div class="login-input-wrap">
+                        <i class="bi bi-phone"></i>
+                        <input
+                            type="tel"
+                            id="sms-phone"
+                            name="phone"
+                            placeholder="09123456789"
+                            autocomplete="tel"
+                            inputmode="tel"
+                            pattern="09[0-9]{9}"
+                            maxlength="11"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="login-field">
+                    <label for="sms-code">کد تأیید پیامک</label>
+                    <div class="login-input-wrap">
+                        <i class="bi bi-chat-square-text"></i>
+                        <input
+                            type="text"
+                            id="sms-code"
+                            name="code"
+                            placeholder="کد ارسال‌شده"
+                            autocomplete="one-time-code"
+                            inputmode="numeric"
+                            pattern="[0-9]{6}"
+                            maxlength="6"
+                            dir="ltr"
+                        >
+                    </div>
+                    <p class="login-field-hint">
+                        ابتدا درخواست ارسال کد بدهید؛ سپس کد دریافتی را وارد کنید.
+                    </p>
+                </div>
+
+                <div class="login-sms-actions">
+                    <button
+                        type="submit"
+                        name="sms_action"
+                        value="send"
+                        class="login-send-code"
+                    >
+                        <i class="bi bi-send"></i>
+                        دریافت کد ورود
+                    </button>
+
+                    <button
+                        type="submit"
+                        name="sms_action"
+                        value="verify"
+                        class="login-submit"
+                    >
+                        تأیید کد و ورود
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+                </div>
+            </form>
+
+            <div class="login-divider">
+                <span>هنوز حساب کاربری نداری؟</span>
+            </div>
+
+            <a href="{{ url_for('register') }}" class="login-register-link">
+                ساخت حساب کاربری
+            </a>
+
+            <p class="login-footer-note">
+                با ورود به حساب، از خدمات و امکانات سایت استفاده کن.
+            </p>
+        </section>
+
+        <aside class="login-aside">
+            <div class="login-aside-art">
+                <div class="login-art-circle login-art-circle-one"></div>
+                <div class="login-art-circle login-art-circle-two"></div>
+
+                <div class="login-art-icon">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+
+                <span class="login-art-dot login-art-dot-one"></span>
+                <span class="login-art-dot login-art-dot-two"></span>
+            </div>
+
+            <div class="login-aside-content">
+                <span class="login-eyebrow">حساب کاربری شما</span>
+                <h2>از همین‌جا ادامه بده.</h2>
+                <p>
+                    به حساب خود وارد شو و نوبت‌ها، درخواست‌ها و اطلاعات
+                    مربوط به خدمات دریافتی‌ات را مدیریت کن.
+                </p>
+            </div>
+
+        </aside>
+
+    </div>
+</main>
+{% endblock %}

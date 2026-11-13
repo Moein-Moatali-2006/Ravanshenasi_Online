@@ -1,10 +1,437 @@
 {% extends "base.html" %}
 
-{% block title %} خانه {% endblock %}
+{% block title %}روان‌شناسی آنلاین | مشاوره و خدمات روان‌شناختی{% endblock %}
+
+{% block meta_description %}
+آشنایی با خدمات مشاوره فردی، زوج‌درمانی، مشاوره خانواده، سکس‌تراپی و مشاوره تحصیلی. اطلاعات خدمات و مسیر دریافت مشاوره روان‌شناختی را ببینید.
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
 
 {% block content %}
 
+<main class="home-page" dir="rtl">
+
+    <!-- اسلایدر اصلی -->
     {% include "inc/carousel.html" %}
 
-{% endblock %}
+    <!-- معرفی مجموعه -->
+    <section class="home-intro section-space">
+        <div class="container">
+            <div class="home-intro-grid">
 
+                <div class="home-intro-content">
+                    <span class="home-eyebrow">
+                        روان‌شناسی آنلاین
+                    </span>
+
+                    <h1>
+                        برای شناخت بهتر خودت،
+                        <span>از یک گفت‌وگوی درست شروع کن.</span>
+                    </h1>
+
+                    <p>
+                        گاهی مسائل فردی، رابطه‌ها یا تصمیم‌های مهم زندگی
+                        به فرصتی برای بررسی دقیق‌تر نیاز دارند.
+                        اینجا می‌توانی با خدمات روان‌شناختی آشنا شوی،
+                        اطلاعات موردنیازت را بخوانی و مسیر مناسب خودت را
+                        برای دریافت مشاوره پیدا کنی.
+                    </p>
+
+                    <div class="home-intro-actions">
+                        <a href="/services/individual/" class="home-btn home-btn-primary">
+                            مشاهده خدمات
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+
+                        <a href="/about/" class="home-btn home-btn-outline">
+                            آشنایی با مجموعه
+                        </a>
+                    </div>
+
+                    <div class="home-intro-note">
+                        <i class="bi bi-info-circle"></i>
+                        <span>
+                            انتخاب نوع مشاوره بهتر است با توجه به شرایط
+                            و نیازهای هر فرد انجام شود.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="home-intro-visual">
+                    <div class="home-visual-card">
+                        <div class="home-visual-icon">
+                            <i class="bi bi-chat-heart"></i>
+                        </div>
+
+                        <span class="home-visual-label">
+                            فضایی برای گفت‌وگو
+                        </span>
+
+                        <h2>
+                            شنیدن، بررسی کردن،
+                            پیدا کردن مسیر مناسب
+                        </h2>
+
+                        <p>
+                            آگاهی بیشتر می‌تواند قدمی برای تصمیم‌گیری
+                            سنجیده‌تر باشد.
+                        </p>
+
+                        <div class="home-visual-decoration decoration-one"></div>
+                        <div class="home-visual-decoration decoration-two"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- دسترسی سریع به خدمات -->
+    <section class="home-services section-space" id="services">
+        <div class="container">
+
+            <div class="home-section-heading">
+                <div>
+                    <span class="home-eyebrow">خدمات ما</span>
+                    <h2>از کجا شروع کنیم؟</h2>
+                    <p>
+                        با زمینه‌های مختلف مشاوره آشنا شو و درباره
+                        خدمتی که به نیازت نزدیک‌تر است بیشتر بخوان.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="home-service-card">
+                        <div class="home-service-icon">
+                            <i class="bi bi-person-heart"></i>
+                        </div>
+                        <h3>مشاوره فردی</h3>
+                        <p>
+                            بررسی دغدغه‌های شخصی، هیجان‌ها، روابط،
+                            تصمیم‌ها و چالش‌های روزمره در فضای مشاوره.
+                        </p>
+                        <a href="/services/individual/" class="home-card-link">
+                            آشنایی با مشاوره فردی
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="home-service-card">
+                        <div class="home-service-icon icon-pink">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h3>زوج‌درمانی</h3>
+                        <p>
+                            پرداختن به مسائل ارتباطی، تعارض‌ها،
+                            گفت‌وگو و شناخت بهتر الگوهای رابطه.
+                        </p>
+                        <a href="/services/couples/" class="home-card-link">
+                            آشنایی با زوج‌درمانی
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="home-service-card">
+                        <div class="home-service-icon icon-peach">
+                            <i class="bi bi-chat-square-heart"></i>
+                        </div>
+                        <h3>سکس‌تراپی</h3>
+                        <p>
+                            بررسی تخصصی و محرمانه دغدغه‌های مرتبط با
+                            سلامت و روابط جنسی در چارچوب حرفه‌ای.
+                        </p>
+                        <a href="/services/sex-therapy/" class="home-card-link">
+                            آشنایی با سکس‌تراپی
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="home-service-card">
+                        <div class="home-service-icon icon-blue">
+                            <i class="bi bi-brain"></i>
+                        </div>
+                        <h3>مشکلات و اختلالات روان‌شناختی</h3>
+                        <p>
+                            آشنایی با ارزیابی و خدمات تخصصی مرتبط با
+                            مشکلات روان‌شناختی و مسیر پیگیری آن‌ها.
+                        </p>
+                        <a href="/services/mental-disorders/" class="home-card-link">
+                            مشاهده اطلاعات خدمات
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="home-service-card">
+                        <div class="home-service-icon icon-yellow">
+                            <i class="bi bi-mortarboard"></i>
+                        </div>
+                        <h3>مشاوره تحصیلی</h3>
+                        <p>
+                            بررسی چالش‌های تحصیلی، برنامه‌ریزی،
+                            انتخاب مسیر آموزشی و تصمیم‌های مرتبط.
+                        </p>
+                        <a href="/services/educational/" class="home-card-link">
+                            آشنایی با مشاوره تحصیلی
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="home-service-card home-service-more">
+                        <div class="home-service-icon icon-dark">
+                            <i class="bi bi-journal-text"></i>
+                        </div>
+                        <h3>مقالات روان‌شناسی</h3>
+                        <p>
+                            مطالب آموزشی درباره سلامت روان، روابط،
+                            مهارت‌های ارتباطی و موضوعات مرتبط را بخوان.
+                        </p>
+                        <a href="/blog/" class="home-card-link">
+                            مطالعه مقالات
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                    </article>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- روند دریافت مشاوره -->
+    <section class="home-process section-space">
+        <div class="container">
+
+            <div class="home-section-heading text-center">
+                <span class="home-eyebrow">مراحل شروع</span>
+                <h2>مسیر دریافت مشاوره چطور است؟</h2>
+                <p>
+                    آشنایی با مراحل کار، انتخاب و شروع را روشن‌تر می‌کند.
+                </p>
+            </div>
+
+            <div class="row g-4 home-process-grid">
+
+                <div class="col-12 col-md-4">
+                    <article class="home-process-card">
+                        <span class="home-process-number">۰۱</span>
+                        <div class="home-process-icon">
+                            <i class="bi bi-search"></i>
+                        </div>
+                        <h3>خدمت موردنظرت را پیدا کن</h3>
+                        <p>
+                            توضیحات خدمات را بخوان و ببین کدام حوزه
+                            با مسئله یا پرسش تو ارتباط بیشتری دارد.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <article class="home-process-card">
+                        <span class="home-process-number">۰۲</span>
+                        <div class="home-process-icon">
+                            <i class="bi bi-person-check"></i>
+                        </div>
+                        <h3>اطلاعات و شرایط را بررسی کن</h3>
+                        <p>
+                            درباره روند دریافت خدمت، متخصص مربوطه،
+                            هزینه و زمان‌بندی اطلاعات کسب کن.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <article class="home-process-card">
+                        <span class="home-process-number">۰۳</span>
+                        <div class="home-process-icon">
+                            <i class="bi bi-calendar2-check"></i>
+                        </div>
+                        <h3>برای شروع اقدام کن</h3>
+                        <p>
+                            پس از مشخص شدن روند ارائه خدمت،
+                            درخواست خود را از مسیر اعلام‌شده ثبت کن.
+                        </p>
+                    </article>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- چرا این مجموعه؟ -->
+    <section class="home-values section-space">
+        <div class="container">
+            <div class="home-values-grid">
+
+                <div class="home-values-content">
+                    <span class="home-eyebrow">اصول کار ما</span>
+                    <h2>اعتماد با شفافیت ساخته می‌شود.</h2>
+                    <p>
+                        در حوزه سلامت روان، دسترسی به اطلاعات روشن
+                        درباره خدمات، متخصصان و روند دریافت مشاوره
+                        اهمیت زیادی دارد. پیش از انتخاب، فرصت داشته باش
+                        آگاهانه بررسی کنی.
+                    </p>
+
+                    <a href="/about/" class="home-btn home-btn-primary">
+                        بیشتر درباره ما
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+
+                <div class="home-values-list">
+
+                    <div class="home-value-item">
+                        <span class="home-value-icon">
+                            <i class="bi bi-card-checklist"></i>
+                        </span>
+                        <div>
+                            <h3>اطلاعات روشن درباره خدمات</h3>
+                            <p>
+                                آشنایی با موضوع هر خدمت و روند دریافت آن
+                                پیش از ثبت درخواست.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="home-value-item">
+                        <span class="home-value-icon">
+                            <i class="bi bi-person-vcard"></i>
+                        </span>
+                        <div>
+                            <h3>توجه به صلاحیت تخصصی</h3>
+                            <p>
+                                بررسی تحصیلات، صلاحیت‌ها و حوزه فعالیت
+                                متخصصان پیش از انتخاب.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="home-value-item">
+                        <span class="home-value-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </span>
+                        <div>
+                            <h3>توجه به حریم خصوصی</h3>
+                            <p>
+                                اطلاعات مربوط به نحوه نگهداری و استفاده
+                                از داده‌های کاربران باید شفاف باشد.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- پرسش‌های متداول -->
+    <section class="home-faq section-space">
+        <div class="container">
+            <div class="home-section-heading text-center">
+                <span class="home-eyebrow">پرسش‌های متداول</span>
+                <h2>قبل از شروع، این‌ها را بدان</h2>
+                <p>
+                    پاسخ به چند پرسش رایج درباره انتخاب خدمات مشاوره.
+                </p>
+            </div>
+
+            <div class="home-faq-list">
+
+                <details class="home-faq-item">
+                    <summary>
+                        چطور بفهمم کدام نوع مشاوره مناسب من است؟
+                        <i class="bi bi-plus-lg"></i>
+                    </summary>
+                    <p>
+                        توضیحات هر خدمت می‌تواند نقطه شروع خوبی باشد.
+                        اگر درباره انتخاب مناسب مطمئن نیستی، از مسیر
+                        پشتیبانی درباره روند راهنمایی و ارجاع سؤال کن.
+                        انتخاب نهایی ممکن است به ارزیابی تخصصی نیاز داشته باشد.
+                    </p>
+                </details>
+
+                <details class="home-faq-item">
+                    <summary>
+                        آیا می‌توانم پیش از ثبت درخواست اطلاعات بیشتری بگیرم؟
+                        <i class="bi bi-plus-lg"></i>
+                    </summary>
+                    <p>
+                        بله. می‌توانی توضیحات خدمات و اطلاعات مجموعه را
+                        بررسی کنی و پرسش‌های خود را از طریق صفحه پشتیبانی
+                        مطرح کنی.
+                    </p>
+                </details>
+
+                <details class="home-faq-item">
+                    <summary>
+                        اطلاعات شخصی من چگونه نگهداری می‌شود؟
+                        <i class="bi bi-plus-lg"></i>
+                    </summary>
+                    <p>
+                        پیش از ثبت اطلاعات حساس، سیاست حفظ حریم خصوصی
+                        سایت را مطالعه کن. مجموعه باید به‌صورت روشن
+                        توضیح دهد چه اطلاعاتی جمع‌آوری می‌شود، چرا
+                        استفاده می‌شود و چگونه از آن محافظت می‌شود.
+                    </p>
+                </details>
+
+                <details class="home-faq-item">
+                    <summary>
+                        آیا مشاوره نتیجه یکسانی برای همه دارد؟
+                        <i class="bi bi-plus-lg"></i>
+                    </summary>
+                    <p>
+                        خیر. شرایط، نیازها و روند کار هر فرد متفاوت است.
+                        هیچ نتیجه درمانی را نمی‌توان برای همه تضمین کرد.
+                    </p>
+                </details>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- دعوت به اقدام -->
+    <section class="home-cta-section">
+        <div class="container">
+            <div class="home-cta">
+                <div class="home-cta-content">
+                    <span>قدم بعدی</span>
+                    <h2>برای انتخاب آگاهانه، از اطلاعات شروع کن.</h2>
+                    <p>
+                        خدمات را بررسی کن یا اگر پرسشی داری،
+                        از صفحه پشتیبانی با مجموعه در ارتباط باش.
+                    </p>
+                </div>
+
+                <div class="home-cta-actions">
+                    <a href="/services/individual/" class="home-btn home-btn-light">
+                        مشاهده خدمات
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+
+                    <a href="/support/" class="home-btn home-btn-cta-outline">
+                        ارتباط با پشتیبانی
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+{% endblock %}

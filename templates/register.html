@@ -1,0 +1,186 @@
+
+{% extends "base.html" %}
+
+{% block title %}ثبت‌نام | روان‌شناسی آنلاین{% endblock %}
+
+{% block meta_description %}
+ایجاد حساب کاربری برای استفاده از خدمات روان‌شناسی آنلاین.
+{% endblock %}
+
+{% block content %}
+<main class="auth-page" dir="rtl">
+    <div class="auth-container">
+
+        <section class="auth-intro">
+            <a href="{{ url_for('home') }}" class="auth-brand">
+                <span class="auth-brand-icon">
+                    <i class="bi bi-heart-pulse"></i>
+                </span>
+                <span>روان‌شناسی آنلاین</span>
+            </a>
+
+            <div class="auth-intro-content">
+                <span class="auth-eyebrow">
+                    <i class="bi bi-stars"></i>
+                    شروع یک مسیر تازه
+                </span>
+
+                <h1>به جمع ما خوش اومدید.</h1>
+
+                <p>
+                    حساب کاربری‌تون رو بسازید تا بتونید درخواست‌ها و
+                    ارتباط‌تون با مجموعه رو راحت‌تر مدیریت کنید.
+                </p>
+
+                <div class="auth-benefits">
+                    <div class="auth-benefit">
+                        <span><i class="bi bi-calendar-check"></i></span>
+                        <div>
+                            <strong>مدیریت درخواست‌ها</strong>
+                            <p>دسترسی ساده‌تر به درخواست‌های ثبت‌شده</p>
+                        </div>
+                    </div>
+
+                    <div class="auth-benefit">
+                        <span><i class="bi bi-shield-lock"></i></span>
+                        <div>
+                            <strong>حساب کاربری شخصی</strong>
+                            <p>ورود به حساب با اطلاعات ثبت‌شده</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="auth-intro-decoration decoration-one"></div>
+            <div class="auth-intro-decoration decoration-two"></div>
+
+            <span class="auth-intro-footer">
+                ارتباطی روشن، در فضایی حرفه‌ای
+            </span>
+        </section>
+
+        <section class="auth-form-section">
+            <div class="auth-form-wrap">
+
+                <div class="auth-mobile-brand">
+                    <span class="auth-brand-icon">
+                        <i class="bi bi-heart-pulse"></i>
+                    </span>
+                    <span>روان‌شناسی آنلاین</span>
+                </div>
+
+                <div class="auth-heading">
+                    <span class="auth-step">ایجاد حساب جدید</span>
+                    <h2>ثبت‌نام</h2>
+                    <p>اطلاعات زیر رو وارد کنید.</p>
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="auth-alert auth-alert-{{ category }}"
+                                 role="status">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="post" action="{{ url_for('register') }}"
+                      class="auth-form">
+
+                    {# اگر Flask-WTF داری، توکن CSRF را اینجا قرار بده. #}
+                    {# مثال: {{ form.csrf_token }} #}
+
+                    <div class="auth-field">
+                        <label for="full_name">نام و نام خانوادگی</label>
+                        <div class="auth-input-wrap">
+                            <i class="bi bi-person"></i>
+                            <input
+                                type="text"
+                                id="full_name"
+                                name="full_name"
+                                placeholder="نام کامل شما"
+                                autocomplete="name"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="phone">شماره تلفن</label>
+                        <div class="auth-input-wrap">
+                            <i class="bi bi-telephone"></i>
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="09123456789"
+                                autocomplete="tel"
+                                inputmode="tel"
+                                maxlength="20"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="password">رمز عبور</label>
+                        <div class="auth-input-wrap">
+                            <i class="bi bi-lock"></i>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="حداقل 8 کاراکتر"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+                        </div>
+                        <span class="auth-field-hint">
+                            از رمز عبور طولانی و غیرقابل حدس استفاده کنید.
+                        </span>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="confirm_password">تکرار رمز عبور</label>
+                        <div class="auth-input-wrap">
+                            <i class="bi bi-shield-check"></i>
+                            <input
+                                type="password"
+                                id="confirm_password"
+                                name="confirm_password"
+                                placeholder="رمز عبور رو دوباره وارد کنید"
+                                autocomplete="new-password"
+                                minlength="12"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">
+                        ساخت حساب کاربری
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+
+                    <p class="auth-terms">
+                        با ثبت‌نام، شرایط استفاده و سیاست حفظ حریم خصوصی
+                        مجموعه رو می‌پذیرید.
+                    </p>
+                </form>
+
+                <div class="auth-login-link">
+                    <span>قبلاً حساب ساخته‌اید؟</span>
+                    <a href="{{ url_for('login') }}">
+                        وارد شوید
+                        <i class="bi bi-arrow-up-left"></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}
