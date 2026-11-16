@@ -1,14 +1,9 @@
-from __future__ import annotations
-
 from datetime import date, datetime, time
-
 from sqlalchemy import (
     CheckConstraint,
     Column,
     DateTime,
     Index,
-    Integer,
-    String,
     Text,
     text,
 )
@@ -16,7 +11,29 @@ from sqlmodel import SQLModel, Field, Relationship
 
 
 # =====================================
-# 1. Employees
+# 1. Employee Fields (Many-to-Many)
+# =====================================
+
+class EmployeeField(SQLModel, table=True):
+    __tablename__ = "employee_fields"
+
+    employee_id: int = Field(
+        foreign_key="employees.employee_id",
+        primary_key=True
+    )
+
+    field_id: int = Field(
+        foreign_key="fields.field_id",
+        primary_key=True
+    )
+
+    __table_args__ = (
+        Index("idx_employee_fields_field", "field_id"),
+    )
+
+
+# =====================================
+# 2. Employees
 # =====================================
 
 class Employee(SQLModel, table=True):
@@ -29,8 +46,7 @@ class Employee(SQLModel, table=True):
 
     employee_phone: str = Field(
         max_length=11,
-        unique=True,
-        index=False
+        unique=True
     )
 
     employee_email: str = Field(max_length=56)
@@ -38,10 +54,9 @@ class Employee(SQLModel, table=True):
     primary_meeting_link: str | None = None
     backup_meeting_link: str | None = None
 
-    # Relationships
     fields: list["ServiceField"] = Relationship(
         back_populates="employees",
-        link_model="EmployeeField"
+        link_model=EmployeeField
     )
 
     set_times: list["SetTime"] = Relationship(
@@ -54,7 +69,7 @@ class Employee(SQLModel, table=True):
 
 
 # =====================================
-# 2. Clients
+# 3. Clients
 # =====================================
 
 class Client(SQLModel, table=True):
@@ -75,7 +90,7 @@ class Client(SQLModel, table=True):
 
 
 # =====================================
-# 3. Fields
+# 4. Fields
 # =====================================
 
 class ServiceField(SQLModel, table=True):
@@ -99,29 +114,7 @@ class ServiceField(SQLModel, table=True):
 
     employees: list[Employee] = Relationship(
         back_populates="fields",
-        link_model="EmployeeField"
-    )
-
-
-# =====================================
-# 4. Employee Fields (Many-to-Many)
-# =====================================
-
-class EmployeeField(SQLModel, table=True):
-    __tablename__ = "employee_fields"
-
-    employee_id: int = Field(
-        foreign_key="employees.employee_id",
-        primary_key=True
-    )
-
-    field_id: int = Field(
-        foreign_key="fields.field_id",
-        primary_key=True
-    )
-
-    __table_args__ = (
-        Index("idx_employee_fields_field", "field_id"),
+        link_model=EmployeeField
     )
 
 
@@ -199,12 +192,9 @@ class Payment(SQLModel, table=True):
     )
 
     count_meet: int
-
-    sale_off: int | None = Field(default=0)
-
+    sale_off: int = Field(default=0)
     total_price: int
-
-    payment_status: int | None = Field(default=0)
+    payment_status: int = Field(default=0)
 
     transfer_tracking_code: str | None = Field(
         default=None,
@@ -246,9 +236,9 @@ class Meet(SQLModel, table=True):
             "meet_done IN (0, 1, 2)",
             name="ck_meets_status"
         ),
+
         Index("idx_meets_payment", "payment_id"),
 
-        # Only one active reservation per time slot.
         Index(
             "idx_meets_active_slot",
             "set_time_id",
@@ -273,7 +263,7 @@ class Meet(SQLModel, table=True):
         sa_column=Column(Text, nullable=True)
     )
 
-    meet_done: int | None = Field(default=0)
+    meet_done: int = Field(default=0)
 
     payment: Payment = Relationship(
         back_populates="meets"
@@ -301,9 +291,7 @@ class Ticket(SQLModel, table=True):
     ticket_id: int | None = Field(default=None, primary_key=True)
 
     sender_name: str = Field(max_length=100)
-
     sender_callback: str = Field(max_length=11)
-
     title: str = Field(max_length=200)
 
     client_text: str = Field(
@@ -315,4 +303,93 @@ class Ticket(SQLModel, table=True):
         sa_column=Column(Text, nullable=True)
     )
 
-    ticket_status: int | None = Field(default=0)
+    ticket_status: int = Field(default=0)
+
+
+# =====================================
+# 9. Admins
+# =====================================
+
+class Admin(SQLModel, table=True):
+    __tablename__ = "admins"
+
+    admin_id: int | None = Field(default=None, primary_key=True)
+
+    admin_name: str = Field(max_length=100)
+
+    admin_username: str = Field(
+        max_length=100,
+        unique=True
+    )
+
+    password_hash: str
+
+    is_active: bool = Field(default=True)
+
+    created_at: datetime | None = Field(
+        default=None,
+        sa_column=Column(
+            DateTime,
+            server_default=text("CURRENT_TIMESTAMP")
+        )
+    )
+
+    articles: list["Article"] = Relationship(
+        back_populates="admin"
+    )
+
+
+# =====================================
+# 10. Articles
+# =====================================
+
+class Article(SQLModel, table=True):
+    __tablename__ = "articles"
+
+    __table_args__ = (
+        Index("idx_articles_topic", "topic"),
+        Index("idx_articles_created_at", "created_at"),
+    )
+
+    article_id: int | None = Field(default=None, primary_key=True)
+
+    title: str = Field(max_length=200)
+
+    topic: str = Field(max_length=100)
+
+    # Image path or filename, not image binary
+    image_path: str = Field(max_length=500)
+
+    content: str = Field(
+        sa_column=Column(Text, nullable=False)
+    )
+
+    author_name: str = Field(max_length=150)
+
+    # Admin who created this article
+    created_by_admin_id: int = Field(
+        foreign_key="admins.admin_id"
+    )
+
+    is_published: bool = Field(default=False)
+
+    created_at: datetime | None = Field(
+        default=None,
+        sa_column=Column(
+            DateTime,
+            server_default=text("CURRENT_TIMESTAMP")
+        )
+    )
+
+    updated_at: datetime | None = Field(
+        default=None,
+        sa_column=Column(
+            DateTime,
+            server_default=text("CURRENT_TIMESTAMP"),
+            onupdate=datetime.utcnow
+        )
+    )
+
+    admin: Admin = Relationship(
+        back_populates="articles"
+    )
