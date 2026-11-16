@@ -5,8 +5,7 @@ from database import create_db_and_tables
 app = Flask("Ravanshenasi Online")
 
 
-@app.on_event("startup")
-def on_startup():
+with app.app_context():
     create_db_and_tables()
 
 @app.route("/", methods=["GET"])
