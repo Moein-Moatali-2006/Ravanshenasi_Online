@@ -1,12 +1,15 @@
 from flask import Flask, render_template
-from database import create_db_and_tables
+from flask_smorest import Api
 
+from database import create_db_and_tables
+from config import Config
 
 app = Flask("Ravanshenasi Online")
+app.config.from_object(Config)
 
+api = Api(app)
+create_db_and_tables()
 
-with app.app_context():
-    create_db_and_tables()
 
 @app.route("/", methods=["GET"])
 def home():
