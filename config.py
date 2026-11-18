@@ -1,3 +1,7 @@
+import os
+import secrets
+
+
 class Config:
     API_TITLE = "Ravanshenasi Online API"
     API_VERSION = "v1"
@@ -9,4 +13,5 @@ class Config:
         "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
     )
 
-    SECRET_KEY = "dac1383d133e26cd4045da16fe0478e314805be5932c43665806f9f81966bdea035cb695fbdf562d8aafacd4015838f2"
+    SECRET_KEY = os.environ.get("SECRET_KEY") or secrets.token_hex(32)
+    DEBUG = os.environ.get("FLASK_DEBUG", "").lower() in {"1", "true", "yes"}

@@ -1,0 +1,25 @@
+:root {
+    color-scheme: light;
+    --color-forest: #285442;
+    --color-forest-dark: #1d4032;
+    --color-forest-soft: #edf4ee;
+    --color-blush: #fff7f8;
+    --color-peach: #e9a795;
+    --color-text: #293b31;
+    --color-muted: #78847b;
+    --color-border: #e3e9e3;
+    --font-family-persian: "Vazirmatn", sans-serif;
+}
+
+body {
+    color: var(--color-text);
+    font-family: var(--font-family-persian);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+    }
+}

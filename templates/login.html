@@ -3,6 +3,10 @@
 
 {% block title %}ورود به حساب کاربری | روان‌شناسی آنلاین{% endblock %}
 
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
 {% block meta_description %}
 ورود امن به حساب کاربری روان‌شناسی آنلاین از طریق شماره تلفن و رمز عبور یا کد تأیید پیامکی.
 {% endblock %}
@@ -12,7 +16,7 @@
     <div class="login-container">
 
         <section class="login-card">
-            <a href="{{ url_for('home') }}" class="login-brand">
+            <a href="{{ url_for('pages.home') }}" class="login-brand">
                 <span class="login-brand-icon">
                     <i class="bi bi-heart-pulse"></i>
                 </span>
@@ -65,7 +69,7 @@
 
             <!-- ورود با رمز عبور -->
             <form
-                action="{{ url_for('login') }}"
+                action="{{ url_for('pages.login') }}"
                 method="POST"
                 class="login-form login-password-form"
             >
@@ -114,7 +118,7 @@
 
             <!-- ورود با پیامک -->
             <form
-                action="{{ url_for('login') }}"
+                action="{{ url_for('pages.login') }}"
                 method="POST"
                 class="login-form login-sms-form"
             >
@@ -196,7 +200,7 @@
                 <span>هنوز حساب کاربری نداری؟</span>
             </div>
 
-            <a href="{{ url_for('register') }}" class="login-register-link">
+            <a href="{{ url_for('pages.register') }}" class="login-register-link">
                 ساخت حساب کاربری
             </a>
 

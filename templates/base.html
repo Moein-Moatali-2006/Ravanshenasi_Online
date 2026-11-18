@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Moein Moatali">
 
-    <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image/png"> 
+    <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image/png">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.rtl.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -15,13 +15,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/support.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-    
-    {% block page_css %} {% endblock %}
+    {% block page_css %}{% endblock %}
 
-    <title> {% block title %} {% endblock %} </title>
+    <meta name="description" content="{% block meta_description %}خدمات روان‌شناسی و مشاوره آنلاین{% endblock %}">
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -31,9 +28,8 @@
         {% block content %} {% endblock %}
     </div>
 
-
     {% include "inc/footer.html" %}
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

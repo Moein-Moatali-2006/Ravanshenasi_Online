@@ -4,14 +4,14 @@
    ========================================= */
 
 .auth-page {
-    --auth-green: #285442;
-    --auth-green-dark: #1d4032;
-    --auth-green-soft: #edf4ee;
-    --auth-pink: #fff7f8;
-    --auth-peach: #e9a795;
+    --auth-green: var(--color-forest);
+    --auth-green-dark: var(--color-forest-dark);
+    --auth-green-soft: var(--color-forest-soft);
+    --auth-pink: var(--color-blush);
+    --auth-peach: var(--color-peach);
     --auth-text: #293b31;
     --auth-muted: #78847b;
-    --auth-border: #e3e9e3;
+    --auth-border: var(--color-border);
 
     min-height: 100vh;
     padding: 42px 20px;

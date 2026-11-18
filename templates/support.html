@@ -2,6 +2,10 @@
 
 {% block title %}پشتیبانی | روان‌شناسی آنلاین{% endblock %}
 
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/support.css') }}">
+{% endblock %}
+
 {% block meta_description %}
     ارتباط با پشتیبانی مجموعه، پیگیری درخواست‌ها و دریافت راهنمایی درباره خدمات و مشکلات فنی سایت.
 {% endblock %}
@@ -148,7 +152,7 @@
                         {% endif %}
                     {% endwith %}
 
-                    <form method="post" action="{{ url_for('support') }}">
+                    <form method="post" action="{{ url_for('pages.support') }}">
                         {# اگر Flask-WTF داری، توکن CSRF را اینجا قرار بده. #}
                         {# مثال: {{ form.csrf_token }} #}
 

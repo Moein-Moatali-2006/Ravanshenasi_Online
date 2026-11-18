@@ -2,11 +2,11 @@
 /* Login page */
 
 .login-page {
-    --login-green: #285442;
-    --login-green-dark: #1d4032;
+    --login-green: var(--color-forest);
+    --login-green-dark: var(--color-forest-dark);
     --login-green-light: #eaf2ed;
     --login-pink: #fff6f7;
-    --login-peach: #e9a795;
+    --login-peach: var(--color-peach);
     --login-text: #28352e;
     --login-muted: #7c8780;
     --login-border: #e4e9e5;

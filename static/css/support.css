@@ -4,14 +4,14 @@
    ========================================= */
 
 .support-page {
-    --support-green: #285442;
-    --support-green-dark: #1d4032;
-    --support-green-soft: #edf4ee;
-    --support-pink: #fff7f8;
-    --support-peach: #e9a795;
+    --support-green: var(--color-forest);
+    --support-green-dark: var(--color-forest-dark);
+    --support-green-soft: var(--color-forest-soft);
+    --support-pink: var(--color-blush);
+    --support-peach: var(--color-peach);
     --support-text: #293b31;
     --support-muted: #718077;
-    --support-border: #e6ebe6;
+    --support-border: var(--color-border);
     --support-white: #ffffff;
 
     color: var(--support-text);

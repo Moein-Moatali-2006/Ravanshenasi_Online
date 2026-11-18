@@ -4,11 +4,11 @@
 ========================= */
 
 .home-page {
-    --home-green: #285442;
-    --home-green-dark: #1d4032;
-    --home-green-soft: #edf4ef;
+    --home-green: var(--color-forest);
+    --home-green-dark: var(--color-forest-dark);
+    --home-green-soft: var(--color-forest-soft);
     --home-pink: #fff6f7;
-    --home-peach: #e9a795;
+    --home-peach: var(--color-peach);
     --home-text: #29372f;
     --home-muted: #748078;
     --home-border: #e7ebe7;

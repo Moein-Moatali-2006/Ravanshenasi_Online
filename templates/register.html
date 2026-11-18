@@ -3,6 +3,10 @@
 
 {% block title %}ثبت‌نام | روان‌شناسی آنلاین{% endblock %}
 
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+{% endblock %}
+
 {% block meta_description %}
 ایجاد حساب کاربری برای استفاده از خدمات روان‌شناسی آنلاین.
 {% endblock %}
@@ -12,7 +16,7 @@
     <div class="auth-container">
 
         <section class="auth-intro">
-            <a href="{{ url_for('home') }}" class="auth-brand">
+            <a href="{{ url_for('pages.home') }}" class="auth-brand">
                 <span class="auth-brand-icon">
                     <i class="bi bi-heart-pulse"></i>
                 </span>
@@ -86,7 +90,7 @@
                     {% endif %}
                 {% endwith %}
 
-                <form method="post" action="{{ url_for('register') }}"
+                <form method="post" action="{{ url_for('pages.register') }}"
                       class="auth-form">
 
                     {# اگر Flask-WTF داری، توکن CSRF را اینجا قرار بده. #}
@@ -173,7 +177,7 @@
 
                 <div class="auth-login-link">
                     <span>قبلاً حساب ساخته‌اید؟</span>
-                    <a href="{{ url_for('login') }}">
+                    <a href="{{ url_for('pages.login') }}">
                         وارد شوید
                         <i class="bi bi-arrow-up-left"></i>
                     </a>
