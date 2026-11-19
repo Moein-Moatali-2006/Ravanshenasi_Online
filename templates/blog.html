@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}مقالات روان‌شناسی | روان‌شناسی آنلاین{% endblock %}
+{% block meta_description %}مطالب آموزشی روان‌شناسی دربارهٔ سلامت روان، رابطه‌ها، یادگیری و مهارت‌های زندگی را بخوانید.{% endblock %}
+{% block canonical_url %}{{ url_for('pages.blog_index', _external=True) }}{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="blog-page" dir="rtl">
+    <section class="blog-hero">
+        <div class="container">
+            <span class="blog-eyebrow"><i class="bi bi-journal-richtext"></i> مجلهٔ روان‌شناسی آنلاین</span>
+            <h1>دانش، برای قدم‌های آگاهانه‌تر</h1>
+            <p>مقاله‌هایی برای شناخت بهتر سلامت روان، رابطه‌ها و مسیر رشد فردی.</p>
+        </div>
+    </section>
+
+    <section class="blog-list-section">
+        <div class="container">
+            {% if articles %}
+                <div class="blog-grid">
+                    {% for article in articles %}
+                        <article class="blog-card">
+                            <a class="blog-card-image" href="{{ url_for('pages.blog_article', slug=article.slug) }}">
+                                <img src="{{ url_for('static', filename=article.image_path) }}"
+                                     alt="{{ article.title }}" loading="lazy">
+                            </a>
+                            <div class="blog-card-content">
+                                <span class="blog-topic">{{ article.topic }}</span>
+                                <h2><a href="{{ url_for('pages.blog_article', slug=article.slug) }}">{{ article.title }}</a></h2>
+                                <p>{{ article.meta_description or article.content[:180] }}</p>
+                                <div class="blog-card-footer">
+                                    <span>{{ article.author_name }}</span>
+                                    {% if article.created_at %}<time datetime="{{ article.created_at.isoformat() }}">{{ article.created_at.strftime("%Y/%m/%d") }}</time>{% endif %}
+                                </div>
+                                <a class="blog-read-more" href="{{ url_for('pages.blog_article', slug=article.slug) }}">
+                                    ادامهٔ مطلب <i class="bi bi-arrow-left"></i>
+                                </a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="blog-empty">
+                    <i class="bi bi-journal-text"></i>
+                    <h2>مقاله‌ای برای نمایش منتشر نشده است</h2>
+                    <p>به‌زودی مطالب تازه به این بخش اضافه می‌شوند.</p>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+</main>
+{% endblock %}

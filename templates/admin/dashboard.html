@@ -1,0 +1,114 @@
+{% extends "admin/base.html" %}
+{% block title %}نمای کلی{% endblock %}
+
+{% block admin_content %}
+<header class="admin-page-heading">
+    <div>
+        <span class="admin-kicker">خلاصهٔ عملکرد</span>
+        <h1>نمای کلی</h1>
+        <p>وضعیت کاربران، جلسه‌ها و بازدیدهای وب‌سایت</p>
+    </div>
+    <span class="admin-today"><i class="bi bi-calendar3"></i> {{ today.strftime("%Y/%m/%d") }}</span>
+</header>
+
+<section class="admin-metric-grid" aria-label="آمار کلیدی">
+    <article class="admin-metric">
+        <span class="admin-metric-icon metric-green"><i class="bi bi-people"></i></span>
+        <div><span>کاربران فعال</span><strong>{{ totals.active_clients }}</strong><small>از {{ totals.clients }} حساب</small></div>
+    </article>
+    <article class="admin-metric">
+        <span class="admin-metric-icon metric-blue"><i class="bi bi-calendar2-check"></i></span>
+        <div><span>کل رزروها</span><strong>{{ totals.appointments }}</strong><small>{{ totals.employees }} متخصص فعال</small></div>
+    </article>
+    <article class="admin-metric">
+        <span class="admin-metric-icon metric-peach"><i class="bi bi-eye"></i></span>
+        <div><span>بازدید امروز</span><strong>{{ visits.today }}</strong><small>{{ visits.week }} بازدید در این هفته</small></div>
+    </article>
+    <article class="admin-metric">
+        <span class="admin-metric-icon metric-yellow"><i class="bi bi-journal-text"></i></span>
+        <div><span>مقالهٔ منتشرشده</span><strong>{{ totals.articles_published }}</strong><small>{{ totals.tickets_open }} تیکت باز</small></div>
+    </article>
+</section>
+
+<section class="admin-panel">
+    <div class="admin-panel-heading">
+        <div><h2>گزارش بازه‌ای</h2><p>تعداد بازدید صفحات و جلسه‌های برگزارشده</p></div>
+    </div>
+    <div class="admin-report-grid">
+        <article class="admin-report-card">
+            <h3><i class="bi bi-eye"></i> بازدید صفحه</h3>
+            <dl>
+                <div><dt>امروز</dt><dd>{{ visits.today }}</dd></div>
+                <div><dt>این هفته</dt><dd>{{ visits.week }}</dd></div>
+                <div><dt>این ماه</dt><dd>{{ visits.month }}</dd></div>
+            </dl>
+        </article>
+        <article class="admin-report-card">
+            <h3><i class="bi bi-person-plus"></i> ثبت‌نام کاربران</h3>
+            <dl>
+                <div><dt>امروز</dt><dd>{{ registrations.today }}</dd></div>
+                <div><dt>این هفته</dt><dd>{{ registrations.week }}</dd></div>
+                <div><dt>این ماه</dt><dd>{{ registrations.month }}</dd></div>
+            </dl>
+        </article>
+        <article class="admin-report-card">
+            <h3><i class="bi bi-calendar-check"></i> جلسه‌های برگزارشده</h3>
+            <dl>
+                <div><dt>امروز</dt><dd>{{ meetings.today }}</dd></div>
+                <div><dt>این هفته</dt><dd>{{ meetings.week }}</dd></div>
+                <div><dt>این ماه</dt><dd>{{ meetings.month }}</dd></div>
+            </dl>
+        </article>
+        <article class="admin-report-card">
+            <h3><i class="bi bi-exclamation-circle"></i> موارد نیازمند پیگیری</h3>
+            <dl>
+                <div><dt>پرداخت در انتظار</dt><dd>{{ totals.payments_pending }}</dd></div>
+                <div><dt>تیکت باز</dt><dd>{{ totals.tickets_open }}</dd></div>
+                <div><dt>مقاله منتشرشده</dt><dd>{{ totals.articles_published }}</dd></div>
+            </dl>
+        </article>
+    </div>
+</section>
+
+<div class="admin-dashboard-grid">
+    <section class="admin-panel">
+        <div class="admin-panel-heading">
+            <div><h2>صفحه‌های پربازدید ماه</h2><p>آمار از صفحه‌های عمومی، بدون ذخیرهٔ IP بازدیدکننده</p></div>
+        </div>
+        {% if top_pages %}
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead><tr><th>مسیر صفحه</th><th>تعداد بازدید</th></tr></thead>
+                    <tbody>
+                        {% for path, count in top_pages %}
+                            <tr><td><code dir="ltr">{{ path }}</code></td><td>{{ count }}</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="admin-empty">هنوز بازدیدی برای این بازه ثبت نشده است.</p>
+        {% endif %}
+    </section>
+
+    <section class="admin-panel">
+        <div class="admin-panel-heading">
+            <div><h2>کاربران تازه</h2><p>آخرین حساب‌های ایجادشده</p></div>
+            <a href="{{ url_for('admin.clients') }}">همهٔ کاربران</a>
+        </div>
+        {% if recent_clients %}
+            <div class="admin-compact-list">
+                {% for client in recent_clients %}
+                    <a href="{{ url_for('admin.client_detail', client_id=client.client_id) }}">
+                        <span class="admin-list-avatar"><i class="bi bi-person"></i></span>
+                        <span><strong>{{ client.client_name }}</strong><small dir="ltr">{{ client.client_phone }}</small></span>
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="admin-empty">کاربری ثبت نشده است.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

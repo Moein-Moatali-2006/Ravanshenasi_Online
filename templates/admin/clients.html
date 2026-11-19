@@ -1,0 +1,41 @@
+{% extends "admin/base.html" %}
+{% block title %}کاربران{% endblock %}
+
+{% block admin_content %}
+<header class="admin-page-heading">
+    <div><span class="admin-kicker">مدیریت حساب‌ها</span><h1>کاربران</h1><p>{{ total }} حساب کاربری</p></div>
+</header>
+
+<section class="admin-panel">
+    <form class="admin-search-form" method="get" action="{{ url_for('admin.clients') }}">
+        <label class="visually-hidden" for="client-search">جست‌وجوی کاربر</label>
+        <input id="client-search" name="q" value="{{ search }}" placeholder="جست‌وجو با نام یا شماره تلفن">
+        <button class="admin-primary-button" type="submit"><i class="bi bi-search"></i> جست‌وجو</button>
+    </form>
+
+    {% if clients %}
+        <div class="admin-table-wrap">
+            <table class="admin-table">
+                <thead><tr><th>کاربر</th><th>شماره تلفن</th><th>وضعیت</th><th></th></tr></thead>
+                <tbody>
+                    {% for client in clients %}
+                        <tr>
+                            <td><strong>{{ client.client_name }}</strong><small class="admin-cell-subtitle">شناسهٔ {{ client.client_id }}</small></td>
+                            <td dir="ltr">{{ client.client_phone }}</td>
+                            <td><span class="admin-badge {% if client.is_active %}badge-success{% else %}badge-muted{% endif %}">{% if client.is_active %}فعال{% else %}غیرفعال{% endif %}</span></td>
+                            <td><a class="admin-row-link" href="{{ url_for('admin.client_detail', client_id=client.client_id) }}">مشاهده و ویرایش <i class="bi bi-arrow-left"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <nav class="admin-pagination" aria-label="صفحه‌بندی کاربران">
+            {% if page > 1 %}<a href="{{ url_for('admin.clients', q=search, page=page-1) }}">صفحهٔ قبل</a>{% endif %}
+            <span>صفحهٔ {{ page }} از {{ total_pages }}</span>
+            {% if page < total_pages %}<a href="{{ url_for('admin.clients', q=search, page=page+1) }}">صفحهٔ بعد</a>{% endif %}
+        </nav>
+    {% else %}
+        <p class="admin-empty">کاربری با این مشخصات پیدا نشد.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "admin/base.html" %}
+{% block title %}متخصصان{% endblock %}
+
+{% block admin_content %}
+<header class="admin-page-heading">
+    <div><span class="admin-kicker">اعضای تیم</span><h1>متخصصان و حوزه‌ها</h1><p>مدیریت اطلاعات متخصصان، وضعیت فعالیت و حوزه‌های تخصصی</p></div>
+</header>
+
+<div class="admin-dashboard-grid">
+    <section class="admin-panel admin-form-panel">
+        <div class="admin-panel-heading"><div><h2>افزودن متخصص</h2><p>متخصصان غیرفعال در فهرست زمان‌های رزرو نمایش داده نمی‌شوند.</p></div></div>
+        <form method="post" action="{{ url_for('admin.employee_create') }}" class="admin-form-grid">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label>نام و نام خانوادگی<input name="employee_name" maxlength="100" required></label>
+            <label>شمارهٔ تلفن<input name="employee_phone" pattern="09[0-9]{9}" maxlength="11" dir="ltr" required></label>
+            <label class="admin-form-full">ایمیل<input name="employee_email" type="email" maxlength="56" dir="ltr" required></label>
+            {% if service_fields %}
+                <fieldset class="admin-fieldset admin-form-full">
+                    <legend>حوزه‌های تخصصی</legend>
+                    <div class="admin-checkbox-list">
+                        {% for field in service_fields %}
+                            <label class="admin-checkbox"><input type="checkbox" name="field_ids" value="{{ field.field_id }}"> {{ field.field_name }}</label>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            {% endif %}
+            <div class="admin-form-full"><button class="admin-primary-button" type="submit">افزودن متخصص</button></div>
+        </form>
+    </section>
+
+    <section class="admin-panel admin-form-panel">
+        <div class="admin-panel-heading"><div><h2>افزودن حوزهٔ تخصص</h2><p>مبلغ پایه برای مدیریت داخلی خدمات</p></div></div>
+        <form method="post" action="{{ url_for('admin.service_field_create') }}" class="admin-form-grid">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label class="admin-form-full">عنوان حوزه<input name="field_name" maxlength="100" required></label>
+            <label class="admin-form-full">مبلغ<input name="field_price" type="number" min="0" step="1" required></label>
+            <div class="admin-form-full"><button class="admin-primary-button" type="submit">افزودن حوزه</button></div>
+        </form>
+        {% if service_fields %}
+            <div class="admin-tag-list">
+                {% for field in service_fields %}<span>{{ field.field_name }} · {{ "{:,}".format(field.field_price) }}</span>{% endfor %}
+            </div>
+        {% endif %}
+    </section>
+</div>
+
+<section class="admin-panel">
+    <div class="admin-panel-heading"><div><h2>فهرست متخصصان</h2><p>{{ employees|length }} متخصص</p></div></div>
+    {% if employees %}
+        <div class="admin-table-wrap">
+            <table class="admin-table">
+                <thead><tr><th>متخصص</th><th>تلفن</th><th>حوزه‌ها</th><th>وضعیت</th><th>مدیریت</th></tr></thead>
+                <tbody>
+                    {% for employee in employees %}
+                        <tr>
+                            <td><strong>{{ employee.employee_name }}</strong><small class="admin-cell-subtitle">{{ employee.employee_email }}</small></td>
+                            <td dir="ltr">{{ employee.employee_phone }}</td>
+                            <td>{{ employee_fields[employee.employee_id]|join("، ") or "—" }}</td>
+                            <td><span class="admin-badge {% if employee.is_active %}badge-success{% else %}badge-muted{% endif %}">{% if employee.is_active %}فعال{% else %}غیرفعال{% endif %}</span></td>
+                            <td class="admin-actions-cell">
+                                <details class="admin-inline-edit">
+                                    <summary>ویرایش</summary>
+                                    <form method="post" action="{{ url_for('admin.employee_edit', employee_id=employee.employee_id) }}" class="admin-form-grid">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <label>نام<input name="employee_name" value="{{ employee.employee_name }}" maxlength="100" required></label>
+                                        <label>تلفن<input name="employee_phone" value="{{ employee.employee_phone }}" pattern="09[0-9]{9}" maxlength="11" dir="ltr" required></label>
+                                        <label class="admin-form-full">ایمیل<input name="employee_email" type="email" value="{{ employee.employee_email }}" maxlength="56" required></label>
+                                        {% if service_fields %}
+                                            <fieldset class="admin-fieldset admin-form-full">
+                                                <legend>حوزه‌های تخصصی</legend>
+                                                <div class="admin-checkbox-list">
+                                                    {% for field in service_fields %}
+                                                        <label class="admin-checkbox"><input type="checkbox" name="field_ids" value="{{ field.field_id }}" {% if field.field_name in employee_fields[employee.employee_id] %}checked{% endif %}> {{ field.field_name }}</label>
+                                                    {% endfor %}
+                                                </div>
+                                            </fieldset>
+                                        {% endif %}
+                                        <div class="admin-form-full"><button class="admin-primary-button" type="submit">ذخیره</button></div>
+                                    </form>
+                                </details>
+                                <form method="post" action="{{ url_for('admin.employee_toggle', employee_id=employee.employee_id) }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button class="admin-text-button" type="submit">{% if employee.is_active %}غیرفعال‌کردن{% else %}فعال‌کردن{% endif %}</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}<p class="admin-empty">هنوز متخصصی ثبت نشده است.</p>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+
+{% block title %}پروفایل کاربری | روان‌شناسی آنلاین{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block meta_description %}
+مدیریت اطلاعات حساب، مشاهده جلسه‌های پیش رو و سوابق پرداخت در پروفایل کاربری.
+{% endblock %}
+
+{% block content %}
+<main class="profile-page" dir="rtl">
+    <div class="container profile-container">
+        <header class="profile-heading">
+            <div>
+                <span class="profile-eyebrow">حساب کاربری شما</span>
+                <h1>پروفایل من</h1>
+                <p>اطلاعات و درخواست‌هایتان را از اینجا مدیریت کنید.</p>
+            </div>
+            <a class="profile-home-link" href="{{ url_for('pages.home') }}">
+                <i class="bi bi-arrow-right"></i>
+                بازگشت به خانه
+            </a>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="profile-messages" aria-live="polite">
+                    {% for category, message in messages %}
+                        <div class="profile-message profile-message-{{ category }}" role="status">
+                            <i class="bi bi-{% if category == 'success' %}check-circle{% else %}info-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="profile-welcome" aria-labelledby="profile-welcome-title">
+            <div class="profile-avatar" aria-hidden="true">
+                {{ client_name[:1] }}
+            </div>
+            <div class="profile-welcome-copy">
+                <span>خوش آمدید</span>
+                <h2 id="profile-welcome-title">{{ client_name }}</h2>
+                <p>حساب شما آمادهٔ مدیریت است؛ هر زمان نیاز داشتید اطلاعاتتان را به‌روز کنید.</p>
+            </div>
+            <a href="#personal-info" class="profile-welcome-action">
+                ویرایش پروفایل
+                <i class="bi bi-pencil"></i>
+            </a>
+            <div class="profile-welcome-decoration" aria-hidden="true"></div>
+        </section>
+
+        <section class="profile-stats" aria-label="خلاصه حساب">
+            <a href="#upcoming-sessions" class="profile-stat">
+                <span class="profile-stat-icon"><i class="bi bi-calendar2-check"></i></span>
+                <span class="profile-stat-copy">
+                    <strong>{{ upcoming_appointments|length }}</strong>
+                    <span>جلسهٔ پیش رو</span>
+                </span>
+            </a>
+            <a href="#payment-history" class="profile-stat">
+                <span class="profile-stat-icon profile-stat-icon-peach"><i class="bi bi-receipt"></i></span>
+                <span class="profile-stat-copy">
+                    <strong>{{ payment_history|length }}</strong>
+                    <span>درخواست پرداخت</span>
+                </span>
+            </a>
+            <div class="profile-stat">
+                <span class="profile-stat-icon profile-stat-icon-blue"><i class="bi bi-chat-heart"></i></span>
+                <span class="profile-stat-copy">
+                    <strong>{{ completed_session_count }}</strong>
+                    <span>جلسهٔ برگزارشده</span>
+                </span>
+            </div>
+        </section>
+
+        <div class="profile-layout">
+            <div class="profile-main-column">
+                <section class="profile-card" id="upcoming-sessions">
+                    <div class="profile-card-heading">
+                        <span class="profile-card-icon"><i class="bi bi-calendar2-week"></i></span>
+                        <div>
+                            <h2>جلسه‌های پیش رو</h2>
+                            <p>برنامهٔ جلسه‌های ثبت‌شدهٔ شما</p>
+                        </div>
+                    </div>
+
+                    {% if upcoming_appointments %}
+                        <div class="profile-session-list">
+                            {% for appointment in upcoming_appointments %}
+                                <article class="profile-session">
+                                    <span class="profile-session-date">
+                                        <i class="bi bi-calendar-event"></i>
+                                        {{ appointment.date.strftime("%Y/%m/%d") }}
+                                    </span>
+                                    <div class="profile-session-info">
+                                        <strong>مشاوره با {{ appointment.employee_name }}</strong>
+                                        <span>ساعت {{ appointment.time.strftime("%H:%M") }}</span>
+                                    </div>
+                                    <span class="profile-status profile-status-success">ثبت‌شده</span>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="profile-empty-state">
+                            <span><i class="bi bi-calendar2-plus"></i></span>
+                            <div>
+                                <strong>جلسه‌ای برای نمایش ندارید</strong>
+                                <p>اگر برای هماهنگی یا پیگیری درخواستتان کمکی لازم دارید، با پشتیبانی در ارتباط باشید.</p>
+                            </div>
+                            <a href="{{ url_for('pages.support') }}">ارتباط با پشتیبانی</a>
+                        </div>
+                    {% endif %}
+                </section>
+
+                <section class="profile-card" id="payment-history">
+                    <div class="profile-card-heading">
+                        <span class="profile-card-icon profile-card-icon-peach"><i class="bi bi-receipt-cutoff"></i></span>
+                        <div>
+                            <h2>سوابق پرداخت</h2>
+                            <p>وضعیت درخواست‌های پرداخت ثبت‌شده</p>
+                        </div>
+                    </div>
+
+                    {% if payment_history %}
+                        <div class="profile-payment-list">
+                            {% for payment in payment_history %}
+                                <article class="profile-payment">
+                                    <div class="profile-payment-icon"><i class="bi bi-journal-check"></i></div>
+                                    <div class="profile-payment-info">
+                                        <strong>بستهٔ {{ payment.count }} جلسه‌ای</strong>
+                                        <span>مبلغ ثبت‌شده: {{ "{:,}".format(payment.amount) }}</span>
+                                        {% if payment.tracking_code %}
+                                            <span>کد پیگیری: <bdi>{{ payment.tracking_code }}</bdi></span>
+                                        {% endif %}
+                                    </div>
+                                    {% if payment.status == 1 %}
+                                        <span class="profile-status profile-status-success">تأییدشده</span>
+                                    {% elif payment.status == 2 %}
+                                        <span class="profile-status profile-status-danger">ردشده</span>
+                                    {% else %}
+                                        <span class="profile-status profile-status-pending">در انتظار بررسی</span>
+                                    {% endif %}
+                                </article>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="profile-empty-state profile-empty-compact">
+                            <span><i class="bi bi-receipt"></i></span>
+                            <div>
+                                <strong>هنوز سابقه‌ای ثبت نشده است</strong>
+                                <p>درخواست‌های پرداخت شما در این بخش نمایش داده می‌شوند.</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </section>
+
+                <section class="profile-card" id="personal-info">
+                    <div class="profile-card-heading">
+                        <span class="profile-card-icon profile-card-icon-blue"><i class="bi bi-person-vcard"></i></span>
+                        <div>
+                            <h2>اطلاعات شخصی</h2>
+                            <p>اطلاعات تماس حساب کاربری</p>
+                        </div>
+                    </div>
+
+                    <dl class="profile-details">
+                        <div>
+                            <dt>نام و نام خانوادگی</dt>
+                            <dd>{{ client_name }}</dd>
+                        </div>
+                        <div>
+                            <dt>شماره تلفن همراه</dt>
+                            <dd dir="ltr">{{ client_phone }}</dd>
+                        </div>
+                    </dl>
+
+                    <details class="profile-edit">
+                        <summary>
+                            <i class="bi bi-pencil-square"></i>
+                            ویرایش اطلاعات
+                        </summary>
+                        <form method="post" action="{{ url_for('pages.profile') }}" class="profile-form">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="action" value="update_profile">
+                            <div class="profile-form-field">
+                                <label for="profile-full-name">نام و نام خانوادگی</label>
+                                <input id="profile-full-name" name="full_name" type="text"
+                                       value="{{ client_name }}" maxlength="100" autocomplete="name" required>
+                            </div>
+                            <div class="profile-form-field">
+                                <label for="profile-phone">شماره تلفن همراه</label>
+                                <input id="profile-phone" name="phone" type="tel" value="{{ client_phone }}"
+                                       pattern="09[0-9]{9}" maxlength="11" inputmode="tel"
+                                       autocomplete="tel" dir="ltr" required>
+                            </div>
+                            <button type="submit" class="profile-submit">
+                                ذخیره تغییرات
+                                <i class="bi bi-check2"></i>
+                            </button>
+                        </form>
+                    </details>
+                </section>
+
+                <section class="profile-card" id="account-security">
+                    <div class="profile-card-heading">
+                        <span class="profile-card-icon"><i class="bi bi-shield-lock"></i></span>
+                        <div>
+                            <h2>امنیت حساب</h2>
+                            <p>برای حفظ امنیت، رمز عبورتان را محرمانه نگه دارید.</p>
+                        </div>
+                    </div>
+
+                    <details class="profile-edit">
+                        <summary>
+                            <i class="bi bi-key"></i>
+                            تغییر رمز عبور
+                        </summary>
+                        <form method="post" action="{{ url_for('pages.profile') }}" class="profile-form">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="action" value="change_password">
+                            <div class="profile-form-field">
+                                <label for="current-password">رمز عبور فعلی</label>
+                                <input id="current-password" name="current_password" type="password"
+                                       autocomplete="current-password" required>
+                            </div>
+                            <div class="profile-form-field">
+                                <label for="new-password">رمز عبور جدید</label>
+                                <input id="new-password" name="new_password" type="password"
+                                       minlength="8" autocomplete="new-password" required>
+                                <span>رمز عبور جدید باید حداقل ۸ کاراکتر باشد.</span>
+                            </div>
+                            <div class="profile-form-field">
+                                <label for="confirm-password">تکرار رمز عبور جدید</label>
+                                <input id="confirm-password" name="confirm_password" type="password"
+                                       minlength="8" autocomplete="new-password" required>
+                            </div>
+                            <button type="submit" class="profile-submit">
+                                تغییر رمز عبور
+                                <i class="bi bi-arrow-left"></i>
+                            </button>
+                        </form>
+                    </details>
+                </section>
+            </div>
+
+            <aside class="profile-side-column" aria-label="دسترسی‌های سریع">
+                <section class="profile-card profile-shortcuts">
+                    <h2>دسترسی سریع</h2>
+                    <a href="#upcoming-sessions">
+                        <i class="bi bi-calendar2-week"></i>
+                        جلسه‌های من
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                    <a href="#payment-history">
+                        <i class="bi bi-receipt"></i>
+                        سوابق پرداخت
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                    <a href="#personal-info">
+                        <i class="bi bi-person-vcard"></i>
+                        اطلاعات شخصی
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                    <a href="#account-security">
+                        <i class="bi bi-shield-lock"></i>
+                        امنیت حساب
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </section>
+
+                <section class="profile-help-card">
+                    <span><i class="bi bi-chat-square-heart"></i></span>
+                    <h2>نیاز به راهنمایی دارید؟</h2>
+                    <p>برای پیگیری درخواست‌ها یا پرسیدن سؤال، تیم پشتیبانی همراه شماست.</p>
+                    <a href="{{ url_for('pages.support') }}">
+                        ارتباط با پشتیبانی
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                </section>
+
+                <form method="post" action="{{ url_for('pages.logout') }}" class="profile-logout-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit">
+                        <i class="bi bi-box-arrow-right"></i>
+                        خروج از حساب کاربری
+                    </button>
+                </form>
+            </aside>
+        </div>
+    </div>
+</main>
+{% endblock %}

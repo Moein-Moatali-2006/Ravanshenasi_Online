@@ -43,35 +43,35 @@
                     <ul class="dropdown-menu algae-dropdown">
 
                         <li>
-                            <a class="dropdown-item" href="/services/couples/">
+                            <a class="dropdown-item" href="{{ url_for('pages.service_detail', service_slug='couples') }}">
                                 <i class="bi bi-people ms-2" aria-hidden="true"></i>
                                 زوج‌درمانی
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" href="/services/sex-therapy/">
+                            <a class="dropdown-item" href="{{ url_for('pages.service_detail', service_slug='sex-therapy') }}">
                                 <i class="bi bi-heart-pulse ms-2" aria-hidden="true"></i>
                                 سکس‌تراپی
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" href="/services/individual/">
+                            <a class="dropdown-item" href="{{ url_for('pages.service_detail', service_slug='individual') }}">
                                 <i class="bi bi-person ms-2" aria-hidden="true"></i>
                                 مشاوره فردی
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" href="/services/mental-disorders/">
+                            <a class="dropdown-item" href="{{ url_for('pages.service_detail', service_slug='mental-disorders') }}">
                                 <i class="bi bi-activity ms-2" aria-hidden="true"></i>
                                 اختلالات روان
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" href="/services/educational/">
+                            <a class="dropdown-item" href="{{ url_for('pages.service_detail', service_slug='educational') }}">
                                 <i class="bi bi-mortarboard ms-2" aria-hidden="true"></i>
                                 مشاوره تحصیلی
                             </a>
@@ -97,25 +97,30 @@
             <!-- Authentication -->
             <div class="auth-buttons d-flex align-items-center gap-2">
 
-                <a class="btn btn-profile" href="/profile/">
-                    <i class="bi bi-person-circle ms-1" aria-hidden="true"></i>
-                    پروفایل کاربری
-                </a>
+                {% if session.get("client_id") %}
+                    <a class="btn btn-profile" href="{{ url_for('pages.profile') }}">
+                        <i class="bi bi-person-circle ms-1" aria-hidden="true"></i>
+                        پروفایل کاربری
+                    </a>
 
-                <a class="btn btn-logout" href="/logout/">
-                    <i class="bi bi-box-arrow-right ms-1" aria-hidden="true"></i>
-                    خروج از حساب
-                </a>
+                    <form method="post" action="{{ url_for('pages.logout') }}" class="m-0">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-logout">
+                            <i class="bi bi-box-arrow-right ms-1" aria-hidden="true"></i>
+                            خروج از حساب
+                        </button>
+                    </form>
+                {% else %}
+                    <a class="btn btn-login" href="{{ url_for('pages.login') }}">
+                        <i class="bi bi-box-arrow-in-left ms-1" aria-hidden="true"></i>
+                        ورود
+                    </a>
 
-                <a class="btn btn-login" href="{{ url_for('pages.login') }}">
-                    <i class="bi bi-box-arrow-in-left ms-1" aria-hidden="true"></i>
-                    ورود
-                </a>
-
-                <a class="btn btn-register" href="{{ url_for('pages.register') }}">
-                    <i class="bi bi-person-plus ms-1" aria-hidden="true"></i>
-                    ثبت‌نام
-                </a>
+                    <a class="btn btn-register" href="{{ url_for('pages.register') }}">
+                        <i class="bi bi-person-plus ms-1" aria-hidden="true"></i>
+                        ثبت‌نام
+                    </a>
+                {% endif %}
 
             </div>
         </div>

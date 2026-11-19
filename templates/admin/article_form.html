@@ -1,0 +1,48 @@
+{% extends "admin/base.html" %}
+{% block title %}{% if article %}ویرایش مقاله{% else %}مقالهٔ جدید{% endif %}{% endblock %}
+
+{% block admin_content %}
+<header class="admin-page-heading">
+    <div><span class="admin-kicker">مدیریت محتوا</span><h1>{% if article %}ویرایش مقاله{% else %}مقالهٔ جدید{% endif %}</h1><p>اطلاعات خوانا و توضیحات جست‌وجو را پیش از انتشار تکمیل کنید.</p></div>
+    <a class="admin-secondary-button" href="{{ url_for('admin.articles') }}"><i class="bi bi-arrow-right"></i> بازگشت به مقالات</a>
+</header>
+
+<section class="admin-panel admin-form-panel">
+    <form method="post" action="{% if article %}{{ url_for('admin.article_edit', article_id=article.article_id) }}{% else %}{{ url_for('admin.article_create') }}{% endif %}" class="admin-form-grid">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label class="admin-form-full">عنوان مقاله
+            <input name="title" value="{{ form_values.get('title', article.title if article else '') }}" maxlength="200" required>
+        </label>
+        <label>نشانی مقاله (slug)
+            <input name="slug" value="{{ form_values.get('slug', article.slug if article and article.slug else '') }}" maxlength="220" pattern="[\w-]+" dir="ltr" required>
+            <small>برای نمونه: mental-health-guide</small>
+        </label>
+        <label>موضوع
+            <input name="topic" value="{{ form_values.get('topic', article.topic if article else '') }}" maxlength="100" required>
+        </label>
+        <label class="admin-form-full">مسیر تصویر در پوشهٔ static
+            <input name="image_path" value="{{ form_values.get('image_path', article.image_path if article else 'images/slider1.png') }}" maxlength="500" dir="ltr" required>
+            <small>فقط مسیرهای داخل images/ پذیرفته می‌شوند؛ نمونه: images/blog/mental-health.jpg</small>
+        </label>
+        <label class="admin-form-full">توضیحات SEO
+            <textarea name="meta_description" maxlength="300" rows="3">{{ form_values.get('meta_description', article.meta_description if article and article.meta_description else '') }}</textarea>
+            <small>حداکثر ۳۰۰ نویسه؛ اگر خالی بماند، از ابتدای متن ساخته می‌شود.</small>
+        </label>
+        <label class="admin-form-full">متن مقاله
+            <textarea name="content" rows="18" required>{{ form_values.get('content', article.content if article else '') }}</textarea>
+        </label>
+        <label>نام نویسنده
+            <input name="author_name" value="{{ form_values.get('author_name', article.author_name if article else form_values.get('author_name', '')) }}" maxlength="150" required>
+        </label>
+        <label class="admin-checkbox">
+            <input type="checkbox" name="is_published"
+                   {% if form_values.get('is_published') == 'on' or (article and article.is_published and 'is_published' not in form_values) %}checked{% endif %}>
+            همین حالا منتشر شود
+        </label>
+        <div class="admin-form-full admin-form-actions">
+            <button type="submit" class="admin-primary-button"><i class="bi bi-check2"></i> ذخیرهٔ مقاله</button>
+            <a class="admin-secondary-button" href="{{ url_for('admin.articles') }}">انصراف</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

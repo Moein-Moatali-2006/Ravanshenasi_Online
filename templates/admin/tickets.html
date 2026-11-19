@@ -1,0 +1,44 @@
+{% extends "admin/base.html" %}
+{% block title %}درخواست‌های پشتیبانی{% endblock %}
+
+{% block admin_content %}
+<header class="admin-page-heading">
+    <div><span class="admin-kicker">ارتباط با کاربران</span><h1>درخواست‌های پشتیبانی</h1><p>مشاهدهٔ پیام‌ها و ثبت پاسخ پیگیری</p></div>
+</header>
+
+<section class="admin-panel">
+    {% if tickets %}
+        <div class="admin-ticket-list">
+            {% for ticket in tickets %}
+                <article class="admin-ticket">
+                    <header>
+                        <div>
+                            <span class="admin-badge {% if ticket.ticket_status == 0 %}badge-warning{% elif ticket.ticket_status == 1 %}badge-success{% else %}badge-muted{% endif %}">
+                                {% if ticket.ticket_status == 0 %}باز{% elif ticket.ticket_status == 1 %}پاسخ‌داده‌شده{% else %}بسته{% endif %}
+                            </span>
+                            <h2>{{ ticket.title }}</h2>
+                            <p>{{ ticket.sender_name }} · <bdi>{{ ticket.sender_callback }}</bdi></p>
+                        </div>
+                        <span class="admin-ticket-id">#{{ ticket.ticket_id }}</span>
+                    </header>
+                    <div class="admin-ticket-message">{{ ticket.client_text }}</div>
+                    <form method="post" action="{{ url_for('admin.ticket_update', ticket_id=ticket.ticket_id) }}" class="admin-form-grid admin-ticket-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <label>وضعیت
+                            <select name="ticket_status">
+                                <option value="0" {% if ticket.ticket_status == 0 %}selected{% endif %}>باز</option>
+                                <option value="1" {% if ticket.ticket_status == 1 %}selected{% endif %}>پاسخ‌داده‌شده</option>
+                                <option value="2" {% if ticket.ticket_status == 2 %}selected{% endif %}>بسته</option>
+                            </select>
+                        </label>
+                        <label class="admin-form-full">یادداشت یا پاسخ
+                            <textarea name="status_response" rows="3">{{ ticket.status_response or '' }}</textarea>
+                        </label>
+                        <div class="admin-form-full"><button type="submit" class="admin-primary-button">ذخیرهٔ پیگیری</button></div>
+                    </form>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}<p class="admin-empty">درخواست پشتیبانی ثبت نشده است.</p>{% endif %}
+</section>
+{% endblock %}

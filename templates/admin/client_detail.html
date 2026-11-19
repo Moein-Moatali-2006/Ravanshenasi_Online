@@ -1,0 +1,61 @@
+{% extends "admin/base.html" %}
+{% block title %}ویرایش کاربر{% endblock %}
+
+{% block admin_content %}
+<header class="admin-page-heading">
+    <div><span class="admin-kicker">حساب شمارهٔ {{ client.client_id }}</span><h1>{{ client.client_name }}</h1><p>مشاهده و مدیریت مشخصات حساب</p></div>
+    <a class="admin-secondary-button" href="{{ url_for('admin.clients') }}"><i class="bi bi-arrow-right"></i> بازگشت به کاربران</a>
+</header>
+
+<section class="admin-panel admin-form-panel">
+    <div class="admin-panel-heading"><div><h2>مشخصات کاربر</h2><p>برای حفظ سوابق، حساب را غیرفعال کنید؛ حذف دائمی انجام نمی‌شود.</p></div></div>
+    <form method="post" action="{{ url_for('admin.client_edit', client_id=client.client_id) }}" class="admin-form-grid">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>نام و نام خانوادگی<input name="client_name" value="{{ client.client_name }}" maxlength="100" required></label>
+        <label>شمارهٔ تلفن<input name="client_phone" value="{{ client.client_phone }}" pattern="09[0-9]{9}" maxlength="11" dir="ltr" required></label>
+        <label class="admin-form-full">تنظیم رمز جدید <span class="admin-help-inline">اختیاری؛ حداقل ۸ نویسه</span>
+            <input name="new_password" type="password" minlength="8" autocomplete="new-password">
+        </label>
+        <label class="admin-checkbox admin-form-full">
+            <input type="checkbox" name="is_active" {% if client.is_active %}checked{% endif %}>
+            حساب فعال است و می‌تواند وارد وب‌سایت شود
+        </label>
+        <div class="admin-form-full"><button type="submit" class="admin-primary-button">ذخیرهٔ تغییرات</button></div>
+    </form>
+</section>
+
+<div class="admin-dashboard-grid admin-detail-grid">
+    <section class="admin-panel">
+        <div class="admin-panel-heading"><div><h2>رزروهای کاربر</h2><p>{{ appointments|length }} جلسه</p></div></div>
+        {% if appointments %}
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead><tr><th>تاریخ</th><th>متخصص</th><th>وضعیت</th></tr></thead>
+                    <tbody>
+                        {% for meet, slot, employee, payment in appointments %}
+                            <tr>
+                                <td>{{ slot.appointment_date }} · {{ slot.start_time.strftime("%H:%M") }}</td>
+                                <td>{{ employee.employee_name }}</td>
+                                <td>{% if meet.meet_done == 1 %}برگزارشده{% elif meet.meet_done == 2 %}لغوشده{% else %}رزروشده{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}<p class="admin-empty">رزروی ثبت نشده است.</p>{% endif %}
+    </section>
+    <section class="admin-panel">
+        <div class="admin-panel-heading"><div><h2>پرداخت‌های کاربر</h2><p>{{ payments|length }} پرداخت</p></div></div>
+        {% if payments %}
+            <div class="admin-compact-list">
+                {% for payment in payments %}
+                    <div class="admin-compact-item">
+                        <span class="admin-list-avatar"><i class="bi bi-receipt"></i></span>
+                        <span><strong>{{ "{:,}".format(payment.total_price) }}</strong><small>{{ payment.count_meet }} جلسه · {% if payment.payment_status == 1 %}تأییدشده{% elif payment.payment_status == 2 %}ردشده{% else %}در انتظار{% endif %}</small></span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}<p class="admin-empty">پرداختی ثبت نشده است.</p>{% endif %}
+    </section>
+</div>
+{% endblock %}

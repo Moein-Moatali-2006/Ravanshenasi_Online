@@ -153,8 +153,7 @@
                     {% endwith %}
 
                     <form method="post" action="{{ url_for('pages.support') }}">
-                        {# اگر Flask-WTF داری، توکن CSRF را اینجا قرار بده. #}
-                        {# مثال: {{ form.csrf_token }} #}
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
                         <div class="support-form-row">
                             <div class="support-field">

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Moein Moatali">
+    <meta name="robots" content="{% block robots %}index,follow{% endblock %}">
+    <link rel="canonical" href="{% block canonical_url %}{{ public_base_url }}{{ request.path }}{% endblock %}">
 
     <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image/png">
 
@@ -18,6 +20,7 @@
     {% block page_css %}{% endblock %}
 
     <meta name="description" content="{% block meta_description %}خدمات روان‌شناسی و مشاوره آنلاین{% endblock %}">
+    {% block head_extra %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body class="d-flex flex-column min-vh-100">

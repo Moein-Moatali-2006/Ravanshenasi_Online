@@ -1,0 +1,65 @@
+{% extends "admin/base.html" %}
+{% block title %}ساعات جلسه{% endblock %}
+
+{% block admin_content %}
+<header class="admin-page-heading">
+    <div><span class="admin-kicker">تقویم کاری</span><h1>ساعات جلسه</h1><p>زمان‌های قابل رزرو متخصصان را ایجاد و مدیریت کنید.</p></div>
+</header>
+
+<section class="admin-panel admin-form-panel">
+    <div class="admin-panel-heading"><div><h2>افزودن زمان در دسترس</h2><p>زمان‌های گذشته یا زمان متخصص غیرفعال پذیرفته نمی‌شود.</p></div></div>
+    {% if employees %}
+        <form method="post" action="{{ url_for('admin.availability_create') }}" class="admin-form-grid admin-form-inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label>متخصص<select name="employee_id" required><option value="">انتخاب کنید</option>{% for employee in employees %}<option value="{{ employee.employee_id }}">{{ employee.employee_name }}</option>{% endfor %}</select></label>
+            <label>تاریخ<input name="appointment_date" type="date" min="{{ today }}" required></label>
+            <label>ساعت<input name="start_time" type="time" required></label>
+            <button type="submit" class="admin-primary-button">ثبت زمان</button>
+        </form>
+    {% else %}
+        <p class="admin-empty">برای تعریف ساعات، ابتدا یک متخصص فعال اضافه کنید.</p>
+        <a class="admin-row-link" href="{{ url_for('admin.employees') }}">مدیریت متخصصان <i class="bi bi-arrow-left"></i></a>
+    {% endif %}
+</section>
+
+<section class="admin-panel">
+    <div class="admin-panel-heading"><div><h2>زمان‌های آینده</h2><p>حداکثر ۲۵۰ زمان نزدیک نمایش داده می‌شود.</p></div></div>
+    {% if slots %}
+        <div class="admin-table-wrap">
+            <table class="admin-table">
+                <thead><tr><th>متخصص</th><th>تاریخ</th><th>ساعت</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+                <tbody>
+                    {% for slot, employee in slots %}
+                        <tr>
+                            <td>{{ employee.employee_name }}</td>
+                            <td>{{ slot.appointment_date }}</td>
+                            <td>{{ slot.start_time.strftime("%H:%M") }}</td>
+                            <td><span class="admin-badge {% if slot.set_time_id in booked_slot_ids %}badge-warning{% else %}badge-success{% endif %}">{% if slot.set_time_id in booked_slot_ids %}رزروشده{% else %}آزاد{% endif %}</span></td>
+                            <td class="admin-actions-cell">
+                                {% if slot.set_time_id not in booked_slot_ids %}
+                                    <details class="admin-inline-edit">
+                                        <summary>ویرایش</summary>
+                                        <form method="post" action="{{ url_for('admin.availability_edit', slot_id=slot.set_time_id) }}" class="admin-form-grid">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <label>متخصص<select name="employee_id" required>{% for available_employee in employees %}<option value="{{ available_employee.employee_id }}" {% if available_employee.employee_id == employee.employee_id %}selected{% endif %}>{{ available_employee.employee_name }}</option>{% endfor %}</select></label>
+                                            <label>تاریخ<input name="appointment_date" type="date" value="{{ slot.appointment_date }}" min="{{ today }}" required></label>
+                                            <label>ساعت<input name="start_time" type="time" value="{{ slot.start_time.strftime('%H:%M') }}" required></label>
+                                            <button type="submit" class="admin-primary-button">ذخیره</button>
+                                        </form>
+                                    </details>
+                                    <form method="post" action="{{ url_for('admin.availability_delete', slot_id=slot.set_time_id) }}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button class="admin-danger-link" type="submit">حذف</button>
+                                    </form>
+                                {% else %}
+                                    <a class="admin-row-link" href="{{ url_for('admin.appointments') }}">مدیریت رزرو</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}<p class="admin-empty">برای این بازه زمانی ثبت نشده است.</p>{% endif %}
+</section>
+{% endblock %}

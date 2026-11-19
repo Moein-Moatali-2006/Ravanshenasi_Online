@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.name }} | روان‌شناسی آنلاین{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/service-detail.css') }}">
+{% endblock %}
+
+{% block meta_description %}
+با {{ service.name }}، موضوع‌های قابل بررسی، روند جلسات و نحوهٔ هماهنگی با متخصص مرتبط آشنا شوید.
+{% endblock %}
+
+{% block content %}
+<main class="service-page" dir="rtl">
+    <section class="service-hero">
+        <div class="container">
+            <nav class="service-breadcrumbs" aria-label="مسیر صفحه">
+                <a href="{{ url_for('pages.home') }}">خانه</a>
+                <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                <a href="{{ url_for('pages.services_index') }}">خدمات</a>
+                <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                <span aria-current="page">{{ service.name }}</span>
+            </nav>
+
+            <div class="service-hero-grid">
+                <div class="service-hero-content">
+                    <span class="service-eyebrow">
+                        <i class="bi {{ service.icon }}" aria-hidden="true"></i>
+                        {{ service.eyebrow }}
+                    </span>
+                    <h1>{{ service.headline }}</h1>
+                    <p>{{ service.intro }}</p>
+                    <div class="service-hero-actions">
+                        <a class="service-button service-button-primary"
+                           href="{{ url_for('pages.support') }}#support-form">
+                            هماهنگی و رزرو جلسه
+                            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                        </a>
+                        <a class="service-button service-button-secondary" href="#about-service">
+                            آشنایی با این خدمت
+                        </a>
+                    </div>
+                    <div class="service-trust-note">
+                        <i class="bi bi-shield-check" aria-hidden="true"></i>
+                        برای اطلاع از متخصصان در دسترس و شرایط جلسه با پشتیبانی هماهنگ کنید.
+                    </div>
+                </div>
+
+                <figure class="service-hero-image">
+                    <img src="{{ url_for('static', filename=service.image) }}"
+                         alt="{{ service.image_alt }}"
+                         fetchpriority="high">
+                    <figcaption>
+                        <span class="service-hero-image-icon">
+                            <i class="bi {{ service.icon }}" aria-hidden="true"></i>
+                        </span>
+                        <span>
+                            <strong>{{ service.name }}</strong>
+                            <small>همراهی متناسب با نیاز شما</small>
+                        </span>
+                    </figcaption>
+                    <span class="service-image-decoration" aria-hidden="true"></span>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section class="service-overview service-section" id="about-service">
+        <div class="container">
+            <div class="service-overview-grid">
+                <div class="service-section-heading">
+                    <span class="service-section-label">دربارهٔ خدمت</span>
+                    <h2>{{ service.overview_title }}</h2>
+                </div>
+                <div class="service-overview-copy">
+                    <p>{{ service.overview }}</p>
+                    <a href="{{ url_for('pages.support') }}#support-form">
+                        دربارهٔ شرایط جلسه بپرسید
+                        <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="service-audience service-section">
+        <div class="container">
+            <div class="service-section-heading service-centered-heading">
+                <span class="service-section-label">آیا این خدمت برای من مناسب است؟</span>
+                <h2>{{ service.audience_title }}</h2>
+                <p>این موارد فقط برای آشنایی هستند و جای ارزیابی تخصصی را نمی‌گیرند.</p>
+            </div>
+
+            <div class="service-audience-grid">
+                {% for item in service.audience %}
+                    <article class="service-audience-card">
+                        <span><i class="bi bi-check2" aria-hidden="true"></i></span>
+                        <p>{{ item }}</p>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="service-specialist service-section">
+        <div class="container">
+            <div class="service-specialist-card">
+                <div class="service-specialist-art" aria-hidden="true">
+                    <span class="service-specialist-art-circle"></span>
+                    <i class="bi {{ service.icon }}"></i>
+                </div>
+                <div class="service-specialist-content">
+                    <span class="service-section-label">همراهی تخصصی</span>
+                    <h2>{{ service.specialist_title }}</h2>
+                    <p>{{ service.specialist_text }}</p>
+                    <ul>
+                        {% for focus in service.specialist_focus %}
+                            <li>
+                                <i class="bi bi-check-circle" aria-hidden="true"></i>
+                                {{ focus }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <p class="service-specialist-note">
+                        نام، سوابق و زمان‌های متخصصان را پیش از رزرو از پشتیبانی جویا شوید.
+                    </p>
+                    <a class="service-text-link" href="{{ url_for('pages.support') }}#support-form">
+                        پرسش دربارهٔ متخصصان
+                        <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="service-gallery service-section" aria-labelledby="service-gallery-title">
+        <div class="container">
+            <div class="service-section-heading service-centered-heading">
+                <span class="service-section-label">فضایی برای گفت‌وگو</span>
+                <h2 id="service-gallery-title">هر قدم با همراهی و توجه</h2>
+                <p>تصاویر این بخش نمونه‌اند و بعداً می‌توانید آن‌ها را با عکس‌های مجموعه جایگزین کنید.</p>
+            </div>
+            <div class="service-gallery-grid">
+                {% for image in service.gallery %}
+                    <figure class="service-gallery-item">
+                        <img src="{{ url_for('static', filename=image.image) }}"
+                             alt="{{ image.alt }}"
+                             loading="lazy">
+                        <figcaption>
+                            <i class="bi bi-heart" aria-hidden="true"></i>
+                            {{ image.caption }}
+                        </figcaption>
+                    </figure>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="service-steps service-section">
+        <div class="container">
+            <div class="service-section-heading service-centered-heading">
+                <span class="service-section-label">شروع ساده است</span>
+                <h2>از درخواست تا هماهنگی جلسه</h2>
+                <p>برای رزرو، ابتدا با پشتیبانی در ارتباط باشید تا جزئیات را با شما بررسی کند.</p>
+            </div>
+            <div class="service-steps-grid">
+                <article class="service-step">
+                    <span class="service-step-number">۰۱</span>
+                    <i class="bi bi-chat-dots" aria-hidden="true"></i>
+                    <h3>موضوعتان را مطرح کنید</h3>
+                    <p>از طریق فرم پشتیبانی، خدمت موردنظر و زمان مناسب تماس را بنویسید.</p>
+                </article>
+                <article class="service-step">
+                    <span class="service-step-number">۰۲</span>
+                    <i class="bi bi-person-check" aria-hidden="true"></i>
+                    <h3>جزئیات را بررسی کنید</h3>
+                    <p>دربارهٔ متخصص مرتبط، شیوهٔ جلسه، هزینه و زمان‌های در دسترس سؤال کنید.</p>
+                </article>
+                <article class="service-step">
+                    <span class="service-step-number">۰۳</span>
+                    <i class="bi bi-calendar2-check" aria-hidden="true"></i>
+                    <h3>زمان جلسه را هماهنگ کنید</h3>
+                    <p>پس از آگاهی از شرایط و تأیید شما، هماهنگی نهایی از طریق پشتیبانی انجام می‌شود.</p>
+                </article>
+            </div>
+            <div class="service-steps-action">
+                <a class="service-button service-button-primary"
+                   href="{{ url_for('pages.support') }}#support-form">
+                    رفتن به پشتیبانی
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="service-faq service-section">
+        <div class="container">
+            <div class="service-section-heading service-centered-heading">
+                <span class="service-section-label">پرسش‌های متداول</span>
+                <h2>پیش از هماهنگی</h2>
+            </div>
+            <div class="service-faq-list">
+                {% for faq in service.faqs %}
+                    <details class="service-faq-item">
+                        <summary>
+                            {{ faq.question }}
+                            <i class="bi bi-plus" aria-hidden="true"></i>
+                        </summary>
+                        <p>{{ faq.answer }}</p>
+                    </details>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="service-related service-section">
+        <div class="container">
+            <div class="service-section-heading">
+                <span class="service-section-label">خدمات دیگر</span>
+                <h2>می‌خواهید بیشتر بررسی کنید؟</h2>
+            </div>
+            <div class="service-related-grid">
+                {% for slug, related in service_slugs.items() %}
+                    {% if slug != service_slug %}
+                        <a href="{{ url_for('pages.service_detail', service_slug=slug) }}"
+                           class="service-related-link">
+                            <i class="bi {{ related.icon }}" aria-hidden="true"></i>
+                            <span>{{ related.name }}</span>
+                            <i class="bi bi-arrow-up-left" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

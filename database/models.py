@@ -53,6 +53,7 @@ class Employee(SQLModel, table=True):
 
     primary_meeting_link: str | None = None
     backup_meeting_link: str | None = None
+    is_active: bool = Field(default=True)
 
     fields: list["ServiceField"] = Relationship(
         back_populates="employees",
@@ -82,6 +83,16 @@ class Client(SQLModel, table=True):
     client_phone: str = Field(
         max_length=11,
         unique=True
+    )
+
+    password_hash: str | None = None
+    is_active: bool = Field(default=True)
+    created_at: datetime | None = Field(
+        default_factory=datetime.utcnow,
+        sa_column=Column(
+            DateTime,
+            server_default=text("CURRENT_TIMESTAMP")
+        )
     )
 
     payments: list["Payment"] = Relationship(
@@ -291,7 +302,7 @@ class Ticket(SQLModel, table=True):
     ticket_id: int | None = Field(default=None, primary_key=True)
 
     sender_name: str = Field(max_length=100)
-    sender_callback: str = Field(max_length=11)
+    sender_callback: str = Field(max_length=255)
     title: str = Field(max_length=200)
 
     client_text: str = Field(
@@ -349,16 +360,21 @@ class Article(SQLModel, table=True):
     __table_args__ = (
         Index("idx_articles_topic", "topic"),
         Index("idx_articles_created_at", "created_at"),
+        Index("uq_articles_slug", "slug", unique=True),
     )
 
     article_id: int | None = Field(default=None, primary_key=True)
 
     title: str = Field(max_length=200)
 
+    slug: str | None = Field(default=None, max_length=220)
+
     topic: str = Field(max_length=100)
 
     # Image path or filename, not image binary
     image_path: str = Field(max_length=500)
+
+    meta_description: str | None = Field(default=None, max_length=300)
 
     content: str = Field(
         sa_column=Column(Text, nullable=False)
@@ -392,4 +408,25 @@ class Article(SQLModel, table=True):
 
     admin: Admin = Relationship(
         back_populates="articles"
+    )
+
+
+class PageView(SQLModel, table=True):
+    __tablename__ = "page_views"
+
+    __table_args__ = (
+        Index("idx_page_views_viewed_at", "viewed_at"),
+    )
+
+    page_view_id: int | None = Field(default=None, primary_key=True)
+
+    path: str = Field(max_length=500, index=True)
+
+    viewed_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        sa_column=Column(
+            DateTime,
+            nullable=False,
+            server_default=text("CURRENT_TIMESTAMP"),
+        ),
     )

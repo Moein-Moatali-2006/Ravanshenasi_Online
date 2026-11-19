@@ -1,0 +1,42 @@
+{% extends "admin/base.html" %}
+{% block title %}پرداخت‌ها{% endblock %}
+
+{% block admin_content %}
+<header class="admin-page-heading">
+    <div><span class="admin-kicker">پیگیری مالی</span><h1>پرداخت‌ها</h1><p>مبلغ، کد پیگیری و وضعیت تأیید پرداخت‌ها را مدیریت کنید.</p></div>
+</header>
+
+<section class="admin-panel">
+    {% if payment_rows %}
+        <div class="admin-table-wrap">
+            <table class="admin-table admin-wide-table">
+                <thead><tr><th>پرداخت</th><th>کاربر</th><th>متخصص</th><th>جلسات</th><th>مبلغ</th><th>وضعیت و کد پیگیری</th></tr></thead>
+                <tbody>
+                    {% for payment, client, employee in payment_rows %}
+                        <tr>
+                            <td>#{{ payment.pay_id }}<small class="admin-cell-subtitle">{{ payment.created_at or "—" }}</small></td>
+                            <td>{{ client.client_name }}</td>
+                            <td>{{ employee.employee_name }}</td>
+                            <td>{{ payment.count_meet }}</td>
+                            <td>{{ "{:,}".format(payment.total_price) }}</td>
+                            <td>
+                                <form method="post" action="{{ url_for('admin.payment_update', payment_id=payment.pay_id) }}" class="admin-row-form">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <select name="payment_status" aria-label="وضعیت پرداخت">
+                                        <option value="0" {% if payment.payment_status == 0 %}selected{% endif %}>در انتظار</option>
+                                        <option value="1" {% if payment.payment_status == 1 %}selected{% endif %}>تأییدشده</option>
+                                        <option value="2" {% if payment.payment_status == 2 %}selected{% endif %}>ردشده</option>
+                                    </select>
+                                    <input type="number" name="total_price" min="0" value="{{ payment.total_price }}" aria-label="مبلغ پرداخت">
+                                    <input name="tracking_code" value="{{ payment.transfer_tracking_code or '' }}" maxlength="50" placeholder="کد پیگیری">
+                                    <button type="submit" class="admin-icon-button" aria-label="ذخیره پرداخت"><i class="bi bi-check2"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}<p class="admin-empty">پرداختی ثبت نشده است.</p>{% endif %}
+</section>
+{% endblock %}

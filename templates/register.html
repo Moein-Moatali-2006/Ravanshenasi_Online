@@ -93,6 +93,7 @@
                 <form method="post" action="{{ url_for('pages.register') }}"
                       class="auth-form">
 
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     {# اگر Flask-WTF داری، توکن CSRF را اینجا قرار بده. #}
                     {# مثال: {{ form.csrf_token }} #}
 
@@ -142,6 +143,14 @@
                                 minlength="8"
                                 required
                             >
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                aria-label="نمایش رمز عبور"
+                                aria-pressed="false"
+                            >
+                                <i class="bi bi-eye" aria-hidden="true"></i>
+                            </button>
                         </div>
                         <span class="auth-field-hint">
                             از رمز عبور طولانی و غیرقابل حدس استفاده کنید.
@@ -158,9 +167,17 @@
                                 name="confirm_password"
                                 placeholder="رمز عبور رو دوباره وارد کنید"
                                 autocomplete="new-password"
-                                minlength="12"
+                                minlength="8"
                                 required
                             >
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                aria-label="نمایش رمز عبور"
+                                aria-pressed="false"
+                            >
+                                <i class="bi bi-eye" aria-hidden="true"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -187,4 +204,5 @@
         </section>
     </div>
 </main>
+<script defer src="{{ url_for('static', filename='js/password-toggle.js') }}"></script>
 {% endblock %}

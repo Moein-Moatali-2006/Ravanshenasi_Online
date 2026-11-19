@@ -1,0 +1,41 @@
+{% extends "admin/base.html" %}
+{% block title %}مقالات وبلاگ{% endblock %}
+
+{% block admin_content %}
+<header class="admin-page-heading">
+    <div><span class="admin-kicker">مدیریت محتوا</span><h1>مقالات وبلاگ</h1><p>ساخت، ویرایش، انتشار یا پیش‌نویس‌کردن مطالب</p></div>
+    <a class="admin-primary-button" href="{{ url_for('admin.article_create') }}"><i class="bi bi-plus-lg"></i> مقالهٔ جدید</a>
+</header>
+
+<section class="admin-panel">
+    {% if articles %}
+        <div class="admin-table-wrap">
+            <table class="admin-table">
+                <thead><tr><th>مقاله</th><th>موضوع</th><th>نشانی</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+                <tbody>
+                    {% for article in articles %}
+                        <tr>
+                            <td><strong>{{ article.title }}</strong><small class="admin-cell-subtitle">{{ article.author_name }}</small></td>
+                            <td>{{ article.topic }}</td>
+                            <td><code dir="ltr">{{ article.slug or "بدون نشانی" }}</code></td>
+                            <td><span class="admin-badge {% if article.is_published %}badge-success{% else %}badge-muted{% endif %}">{% if article.is_published %}منتشرشده{% else %}پیش‌نویس{% endif %}</span></td>
+                            <td class="admin-actions-cell">
+                                <a class="admin-row-link" href="{{ url_for('admin.article_edit', article_id=article.article_id) }}">ویرایش</a>
+                                {% if article.is_published and article.slug %}
+                                    <a class="admin-row-link" href="{{ url_for('pages.blog_article', slug=article.slug) }}" target="_blank" rel="noopener">نمایش</a>
+                                {% endif %}
+                                <form method="post" action="{{ url_for('admin.article_delete', article_id=article.article_id) }}" onsubmit="return confirm('مقاله حذف شود؟');">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button class="admin-danger-link" type="submit">حذف</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="admin-empty"><p>هنوز مقاله‌ای ثبت نشده است.</p><a class="admin-row-link" href="{{ url_for('admin.article_create') }}">اولین مقاله را بسازید</a></div>
+    {% endif %}
+</section>
+{% endblock %}

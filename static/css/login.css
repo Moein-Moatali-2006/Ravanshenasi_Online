@@ -245,6 +245,48 @@
     color: var(--login-green);
 }
 
+#login-password {
+    padding-left: 48px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 34px;
+    padding: 0;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: #7c8780;
+    cursor: pointer;
+}
+
+.password-toggle:focus-visible {
+    border-radius: 6px;
+    outline: 2px solid var(--login-green);
+    outline-offset: 2px;
+}
+
+.login-remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: -4px 0 17px;
+    color: var(--login-muted);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.login-remember input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--login-green);
+}
+
 .login-field-hint {
     margin: 8px 0 0;
     color: var(--login-muted);

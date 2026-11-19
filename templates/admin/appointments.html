@@ -1,0 +1,78 @@
+{% extends "admin/base.html" %}
+{% block title %}رزروها{% endblock %}
+
+{% block admin_content %}
+<header class="admin-page-heading">
+    <div><span class="admin-kicker">مدیریت نوبت‌ها</span><h1>رزرو جلسه</h1><p>رزرو، جابه‌جایی زمان، تکمیل یا لغو جلسه</p></div>
+    <a class="admin-secondary-button" href="{{ url_for('admin.availability') }}"><i class="bi bi-calendar3"></i> مدیریت ساعات</a>
+</header>
+
+<section class="admin-panel admin-form-panel">
+    <div class="admin-panel-heading"><div><h2>ثبت رزرو جدید</h2><p>مبلغ و وضعیت پرداخت را پیش از ثبت با کاربر هماهنگ کنید.</p></div></div>
+    {% if clients and available_slots %}
+        <form method="post" action="{{ url_for('admin.appointment_create') }}" class="admin-form-grid">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label>کاربر<select name="client_id" required><option value="">انتخاب کاربر</option>{% for client in clients %}<option value="{{ client.client_id }}">{{ client.client_name }} — {{ client.client_phone }}</option>{% endfor %}</select></label>
+            <label>زمان آزاد<select name="set_time_id" required><option value="">انتخاب زمان</option>{% for slot, employee in available_slots %}<option value="{{ slot.set_time_id }}">{{ slot.appointment_date }} · {{ slot.start_time.strftime("%H:%M") }} · {{ employee.employee_name }}</option>{% endfor %}</select></label>
+            <label>تعداد جلسه در بسته<input type="number" name="count_meet" min="1" value="1" required></label>
+            <label>مبلغ کل<input type="number" name="total_price" min="0" step="1" required></label>
+            <label class="admin-form-full">وضعیت پرداخت<select name="payment_status"><option value="0">در انتظار پرداخت/بررسی</option><option value="1">تأییدشده</option></select></label>
+            <div class="admin-form-full"><button type="submit" class="admin-primary-button"><i class="bi bi-calendar-plus"></i> ثبت رزرو</button></div>
+        </form>
+    {% else %}
+        <p class="admin-empty">برای رزرو جلسه، دست‌کم یک کاربر فعال و یک زمان آزاد لازم است.</p>
+        <a class="admin-row-link" href="{{ url_for('admin.availability') }}">افزودن زمان آزاد <i class="bi bi-arrow-left"></i></a>
+    {% endif %}
+</section>
+
+<section class="admin-panel">
+    <div class="admin-panel-heading"><div><h2>جلسه‌های ثبت‌شده</h2><p>حداکثر ۲۵۰ رزرو اخیر</p></div></div>
+    {% if appointment_rows %}
+        <div class="admin-table-wrap">
+            <table class="admin-table admin-wide-table">
+                <thead><tr><th>کاربر</th><th>متخصص</th><th>زمان فعلی</th><th>وضعیت</th><th>ویرایش</th></tr></thead>
+                <tbody>
+                    {% for meet, slot, employee, client, payment in appointment_rows %}
+                        <tr>
+                            <td><a href="{{ url_for('admin.client_detail', client_id=client.client_id) }}">{{ client.client_name }}</a><small class="admin-cell-subtitle" dir="ltr">{{ client.client_phone }}</small></td>
+                            <td>{{ employee.employee_name }}</td>
+                            <td>{{ slot.appointment_date }}<small class="admin-cell-subtitle">{{ slot.start_time.strftime("%H:%M") }}</small></td>
+                            <td>
+                                <span class="admin-badge {% if meet.meet_done == 1 %}badge-success{% elif meet.meet_done == 2 %}badge-muted{% else %}badge-warning{% endif %}">
+                                    {% if meet.meet_done == 1 %}برگزارشده{% elif meet.meet_done == 2 %}لغوشده{% else %}رزروشده{% endif %}
+                                </span>
+                            </td>
+                            <td>
+                                <details class="admin-inline-edit">
+                                    <summary>ویرایش رزرو</summary>
+                                    <form method="post" action="{{ url_for('admin.appointment_edit', meet_id=meet.meet_id) }}" class="admin-form-grid">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <label class="admin-form-full">زمان جدید <span class="admin-help-inline">خالی بگذارید تا زمان فعلی حفظ شود</span>
+                                            <select name="set_time_id">
+                                                <option value="">بدون تغییر</option>
+                                                {% for other_slot, other_employee in slots %}
+                                                    {% if other_slot.set_time_id not in booked_slot_ids or other_slot.set_time_id == meet.set_time_id %}
+                                                        <option value="{{ other_slot.set_time_id }}" {% if other_slot.set_time_id == meet.set_time_id %}selected{% endif %}>{{ other_slot.appointment_date }} · {{ other_slot.start_time.strftime("%H:%M") }} · {{ other_employee.employee_name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </label>
+                                        <label class="admin-form-full">وضعیت
+                                            <select name="meet_done">
+                                                <option value="0" {% if meet.meet_done == 0 %}selected{% endif %}>رزروشده</option>
+                                                <option value="1" {% if meet.meet_done == 1 %}selected{% endif %}>برگزارشده</option>
+                                                <option value="2" {% if meet.meet_done == 2 %}selected{% endif %}>لغوشده</option>
+                                            </select>
+                                        </label>
+                                        <div class="admin-form-full"><button class="admin-primary-button" type="submit">ذخیرهٔ تغییر</button></div>
+                                    </form>
+                                </details>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}<p class="admin-empty">هنوز جلسه‌ای ثبت نشده است.</p>{% endif %}
+</section>
+{% endblock %}

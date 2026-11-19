@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}خدمات روان‌شناختی | روان‌شناسی آنلاین{% endblock %}
+{% block meta_description %}با خدمات روان‌شناسی آنلاین در مشاوره فردی، زوج‌درمانی، مشاوره تحصیلی، سلامت روان و سکس‌تراپی آشنا شوید.{% endblock %}
+{% block canonical_url %}{{ url_for('pages.services_index', _external=True) }}{% endblock %}
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/service-detail.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="services-index-page" dir="rtl">
+    <section class="service-hero services-index-hero">
+        <div class="container">
+            <div class="services-index-heading">
+                <span class="service-eyebrow"><i class="bi bi-heart-pulse"></i> خدمات روان‌شناسی آنلاین</span>
+                <h1>خدمات روان‌شناختی</h1>
+                <p>با حوزه‌های مختلف آشنا شوید و دربارهٔ خدمتی که به نیازتان نزدیک‌تر است بیشتر بخوانید.</p>
+            </div>
+            <div class="services-index-grid">
+                {% for slug, service in services.items() %}
+                    <article class="services-index-card">
+                        <a class="services-index-image" href="{{ url_for('pages.service_detail', service_slug=slug) }}">
+                            <img src="{{ url_for('static', filename=service.image) }}" alt="{{ service.image_alt }}" loading="lazy">
+                        </a>
+                        <div>
+                            <span class="services-index-icon"><i class="bi {{ service.icon }}"></i></span>
+                            <h2><a href="{{ url_for('pages.service_detail', service_slug=slug) }}">{{ service.name }}</a></h2>
+                            <p>{{ service.intro }}</p>
+                            <a class="service-text-link" href="{{ url_for('pages.service_detail', service_slug=slug) }}">
+                                آشنایی با خدمت <i class="bi bi-arrow-left"></i>
+                            </a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -10,7 +10,8 @@ CREATE TABLE employees (
     employee_phone VARCHAR(11) NOT NULL UNIQUE,
     employee_email VARCHAR(56) NOT NULL,
     primary_meeting_link VARCHAR,
-    backup_meeting_link VARCHAR
+    backup_meeting_link VARCHAR,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 
@@ -21,7 +22,10 @@ CREATE TABLE employees (
 CREATE TABLE clients (
     client_id SERIAL PRIMARY KEY,
     client_name VARCHAR(100) NOT NULL,
-    client_phone VARCHAR(11) NOT NULL UNIQUE
+    client_phone VARCHAR(11) NOT NULL UNIQUE,
+    password_hash VARCHAR,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -97,7 +101,7 @@ CREATE TABLE payments (
     transfer_tracking_code VARCHAR(50),
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    confirmed_at TIMESTAMP,
+    confirmed_at TIMESTAMP
 
     -- 0 = Pending
     -- 1 = Confirmed
@@ -137,7 +141,7 @@ CREATE TABLE tickets (
     ticket_id SERIAL PRIMARY KEY,
 
     sender_name VARCHAR(100) NOT NULL,
-    sender_callback VARCHAR(11) NOT NULL,
+    sender_callback VARCHAR(255) NOT NULL,
     title VARCHAR(200) NOT NULL,
 
     client_text TEXT NOT NULL,
@@ -175,3 +179,56 @@ ON meets(payment_id);
 CREATE UNIQUE INDEX idx_meets_active_slot
 ON meets(set_time_id)
 WHERE meet_done <> 2;
+
+
+-- =====================================
+-- 10. Admins
+-- Create the initial password with the `flask create-admin` CLI command.
+-- =====================================
+
+CREATE TABLE admins (
+    admin_id SERIAL PRIMARY KEY,
+    admin_name VARCHAR(100) NOT NULL,
+    admin_username VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- =====================================
+-- 11. Articles
+-- =====================================
+
+CREATE TABLE articles (
+    article_id SERIAL PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    slug VARCHAR(220) UNIQUE,
+    topic VARCHAR(100) NOT NULL,
+    image_path VARCHAR(500) NOT NULL,
+    meta_description VARCHAR(300),
+    content TEXT NOT NULL,
+    author_name VARCHAR(150) NOT NULL,
+    created_by_admin_id INTEGER NOT NULL REFERENCES admins(admin_id),
+    is_published BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_articles_topic ON articles(topic);
+CREATE INDEX idx_articles_created_at ON articles(created_at);
+
+
+-- =====================================
+-- 12. Anonymous page-view analytics
+-- No IP address or visitor identity is stored.
+-- =====================================
+
+CREATE TABLE page_views (
+    page_view_id SERIAL PRIMARY KEY,
+    path VARCHAR(500) NOT NULL,
+    viewed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_page_views_viewed_at ON page_views(viewed_at);
+CREATE INDEX ix_page_views_path ON page_views(path);

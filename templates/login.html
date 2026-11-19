@@ -74,6 +74,7 @@
                 class="login-form login-password-form"
             >
                 <input type="hidden" name="login_method" value="password">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
                 {# اگر Flask-WTF داری، توکن CSRF را اینجا قرار بده. #}
 
@@ -107,8 +108,21 @@
                             autocomplete="current-password"
                             required
                         >
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            aria-label="نمایش رمز عبور"
+                            aria-pressed="false"
+                        >
+                            <i class="bi bi-eye" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
+
+                <label class="login-remember">
+                    <input type="checkbox" name="remember_me" checked>
+                    <span>مرا به خاطر بسپار (۱۵ روز)</span>
+                </label>
 
                 <button type="submit" class="login-submit">
                     ورود به حساب
@@ -123,6 +137,7 @@
                 class="login-form login-sms-form"
             >
                 <input type="hidden" name="login_method" value="sms">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
                 {# اگر Flask-WTF داری، توکن CSRF را اینجا قرار بده. #}
 
@@ -235,4 +250,5 @@
 
     </div>
 </main>
+<script defer src="{{ url_for('static', filename='js/password-toggle.js') }}"></script>
 {% endblock %}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <title>{% block title %}پنل مدیریت{% endblock %} | روان‌شناسی آنلاین</title>
+</head>
+<body class="admin-body">
+    <header class="admin-topbar">
+        <a class="admin-brand" href="{{ url_for('admin.dashboard') }}">
+            <span class="admin-brand-icon"><i class="bi bi-heart-pulse"></i></span>
+            <span>مدیریت سایت<small>روان‌شناسی آنلاین</small></span>
+        </a>
+        {% if session.get("admin_id") %}
+            <div class="admin-topbar-user">
+                <span><i class="bi bi-person-circle"></i> مدیر سایت</span>
+                <form method="post" action="{{ url_for('admin.logout') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="admin-logout-button" type="submit">
+                        <i class="bi bi-box-arrow-right"></i> خروج
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+    </header>
+
+    <div class="admin-shell {% if not session.get('admin_id') %}admin-shell-auth{% endif %}">
+        {% if session.get("admin_id") %}
+            <aside class="admin-sidebar">
+                <span class="admin-sidebar-label">مدیریت</span>
+                <nav aria-label="منوی پنل مدیریت">
+                    <a href="{{ url_for('admin.dashboard') }}" class="{% if request.endpoint == 'admin.dashboard' %}active{% endif %}">
+                        <i class="bi bi-grid-1x2"></i> نمای کلی
+                    </a>
+                    <a href="{{ url_for('admin.clients') }}" class="{% if request.endpoint in ['admin.clients', 'admin.client_detail'] %}active{% endif %}">
+                        <i class="bi bi-people"></i> کاربران
+                    </a>
+                    <a href="{{ url_for('admin.employees') }}" class="{% if request.endpoint == 'admin.employees' %}active{% endif %}">
+                        <i class="bi bi-person-badge"></i> متخصصان
+                    </a>
+                    <a href="{{ url_for('admin.availability') }}" class="{% if request.endpoint == 'admin.availability' %}active{% endif %}">
+                        <i class="bi bi-calendar3"></i> ساعات جلسه
+                    </a>
+                    <a href="{{ url_for('admin.appointments') }}" class="{% if request.endpoint == 'admin.appointments' %}active{% endif %}">
+                        <i class="bi bi-calendar2-check"></i> رزروها
+                    </a>
+                    <a href="{{ url_for('admin.payments') }}" class="{% if request.endpoint == 'admin.payments' %}active{% endif %}">
+                        <i class="bi bi-credit-card"></i> پرداخت‌ها
+                    </a>
+                    <a href="{{ url_for('admin.tickets') }}" class="{% if request.endpoint == 'admin.tickets' %}active{% endif %}">
+                        <i class="bi bi-chat-left-text"></i> پشتیبانی
+                    </a>
+                    <a href="{{ url_for('admin.articles') }}" class="{% if request.endpoint in ['admin.articles', 'admin.article_create', 'admin.article_edit'] %}active{% endif %}">
+                        <i class="bi bi-journal-richtext"></i> مقالات وبلاگ
+                    </a>
+                </nav>
+                <a class="admin-site-link" href="{{ url_for('pages.home') }}" target="_blank" rel="noopener">
+                    <i class="bi bi-box-arrow-up-right"></i> مشاهدهٔ وب‌سایت
+                </a>
+            </aside>
+        {% endif %}
+
+        <main class="admin-main">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="admin-flashes" aria-live="polite">
+                        {% for category, message in messages %}
+                            <div class="admin-flash admin-flash-{{ category }}" role="status">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% block admin_content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

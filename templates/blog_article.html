@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} | روان‌شناسی آنلاین{% endblock %}
+{% block meta_description %}{{ article.meta_description or article.content[:280] }}{% endblock %}
+{% block canonical_url %}{{ public_base_url }}{{ url_for('pages.blog_article', slug=article.slug) }}{% endblock %}
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+{% endblock %}
+{% block head_extra %}
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ article.title }}">
+    <meta property="og:description" content="{{ article.meta_description or article.content[:280] }}">
+    <meta property="og:url" content="{{ public_base_url }}{{ url_for('pages.blog_article', slug=article.slug) }}">
+    <meta property="og:image" content="{{ public_base_url }}{{ url_for('static', filename=article.image_path) }}">
+    <script type="application/ld+json">
+        {{ {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": article.title,
+            "description": article.meta_description or article.content[:280],
+            "image": public_base_url ~ url_for("static", filename=article.image_path),
+            "author": {"@type": "Person", "name": article.author_name},
+            "datePublished": article.created_at.isoformat() if article.created_at else none,
+            "dateModified": article.updated_at.isoformat() if article.updated_at else none,
+            "mainEntityOfPage": public_base_url ~ url_for("pages.blog_article", slug=article.slug)
+        } | tojson }}
+    </script>
+{% endblock %}
+
+{% block content %}
+<main class="blog-page blog-article-page" dir="rtl">
+    <div class="container">
+        <nav class="blog-breadcrumbs" aria-label="مسیر صفحه">
+            <a href="{{ url_for('pages.home') }}">خانه</a>
+            <i class="bi bi-chevron-left"></i>
+            <a href="{{ url_for('pages.blog_index') }}">مقالات</a>
+            <i class="bi bi-chevron-left"></i>
+            <span>{{ article.title }}</span>
+        </nav>
+
+        <article class="blog-article">
+            <header class="blog-article-header">
+                <span class="blog-topic">{{ article.topic }}</span>
+                <h1>{{ article.title }}</h1>
+                <div class="blog-article-meta">
+                    <span><i class="bi bi-person"></i> {{ article.author_name }}</span>
+                    {% if article.created_at %}<time datetime="{{ article.created_at.isoformat() }}"><i class="bi bi-calendar3"></i> {{ article.created_at.strftime("%Y/%m/%d") }}</time>{% endif %}
+                </div>
+            </header>
+            <figure class="blog-article-image">
+                <img src="{{ url_for('static', filename=article.image_path) }}" alt="{{ article.title }}">
+            </figure>
+            <div class="blog-article-content">{{ article.content }}</div>
+            <footer class="blog-article-footer">
+                <a href="{{ url_for('pages.blog_index') }}"><i class="bi bi-arrow-right"></i> بازگشت به مقالات</a>
+                <a href="{{ url_for('pages.support') }}#support-form">ارتباط با پشتیبانی</a>
+            </footer>
+        </article>
+    </div>
+</main>
+{% endblock %}

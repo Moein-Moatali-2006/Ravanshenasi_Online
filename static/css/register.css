@@ -312,6 +312,33 @@
     opacity: 1;
 }
 
+.auth-input-wrap #password,
+.auth-input-wrap #confirm_password {
+    padding-left: 48px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 34px;
+    padding: 0;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: #78847b;
+    cursor: pointer;
+}
+
+.password-toggle:focus-visible {
+    border-radius: 6px;
+    outline: 2px solid var(--auth-green);
+    outline-offset: 2px;
+}
+
 .auth-field-hint {
     color: var(--auth-muted);
     font-size: 0.76rem;
